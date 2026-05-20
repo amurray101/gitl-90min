@@ -3,92 +3,2392 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Find your task &mdash; Grrls in the Loop</title>
+  <title>Find your task — Grrls in the Loop</title>
+  <meta name="description" content="What do you do all week — and which one of those could AI 10x? Step 1 of the Grrls in the Loop 90-minute workshop.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
+      --blue: #A8D8EA;
       --blue-light: #d6eef7;
       --mint: #A8E6CE;
+      --mint-light: #d8f5e7;
+      --coral: #F08080;
+      --coral-light: #fce4e4;
       --yellow: #E8C840;
+      --yellow-light: #faf0c8;
       --black: #1a1a1a;
       --grey: #6b6b6b;
       --light-grey: #f7f7f5;
       --white: #ffffff;
     }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Inter', -apple-system, sans-serif;
       color: var(--black);
       background: var(--blue-light);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 24px;
+      padding: 48px 24px 96px;
     }
+
     .container {
-      max-width: 720px;
-      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
       background: var(--white);
       border-radius: 24px;
       padding: 64px 56px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.06);
     }
+
     .back-link {
       display: inline-block;
-      font-size: 14px;
       color: var(--grey);
+      font-size: 14px;
       text-decoration: none;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
+      transition: color 0.2s ease;
     }
     .back-link:hover { color: var(--black); }
-    .step-label {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--grey);
       margin-bottom: 12px;
     }
+
     h1 {
       font-size: clamp(32px, 5vw, 44px);
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 16px;
+      line-height: 1.15;
     }
-    .lead {
+
+    .intro {
       font-size: 18px;
       color: var(--grey);
       margin-bottom: 40px;
     }
-    .placeholder {
+
+    /* ---- Framework block ---- */
+    .framework {
       background: var(--light-grey);
       border-radius: 16px;
-      padding: 32px;
-      color: var(--grey);
-      font-size: 15px;
-      font-style: italic;
-      text-align: center;
+      padding: 28px 32px;
+      margin-bottom: 40px;
     }
+    .framework-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 16px;
+    }
+    .framework-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .framework-grid { grid-template-columns: 1fr; }
+    }
+    .framework-item h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .framework-item p {
+      font-size: 14px;
+      color: var(--grey);
+      margin: 0;
+    }
+
+    /* ---- TOC ---- */
+    .toc {
+      background: var(--light-grey);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 56px;
+    }
+    .toc-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+    }
+    .toc ol li {
+      counter-increment: toc;
+      padding: 6px 0;
+      font-size: 15px;
+    }
+    .toc ol li::before {
+      content: counter(toc) ". ";
+      color: var(--grey);
+      font-weight: 600;
+    }
+    .toc ol li a {
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .toc ol li a:hover {
+      border-bottom-color: var(--yellow);
+    }
+
+    /* ---- Lesson section ---- */
+    .lesson {
+      border-top: 1px solid var(--light-grey);
+      padding-top: 56px;
+      margin-top: 56px;
+    }
+    .lesson:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .lesson-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .lesson h2 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .lesson-sub {
+      font-size: 15px;
+      color: var(--grey);
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .lesson p {
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+
+    /* ---- Flow diagram ---- */
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 0;
+      align-items: stretch;
+      margin: 16px 0 28px;
+    }
+    .flow-step {
+      border-radius: 16px;
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .flow-step.sense { background: var(--blue-light); }
+    .flow-step.plan { background: var(--yellow-light); }
+    .flow-step.act { background: var(--mint-light); }
+
+    .flow-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .flow-step.sense .flow-label { color: #3a7a96; }
+    .flow-step.plan .flow-label { color: #8a6f1c; }
+    .flow-step.act .flow-label { color: #2e7d58; }
+
+    .flow-step h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .flow-step ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .flow-step ul li {
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 3px 0 3px 14px;
+      position: relative;
+      color: var(--black);
+    }
+    .flow-step ul li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.35;
+    }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      color: var(--grey);
+      font-size: 20px;
+      font-weight: 300;
+    }
+    .flow-arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (max-width: 720px) {
+      .flow {
+        grid-template-columns: 1fr;
+      }
+      .flow-arrow {
+        width: 100%;
+        padding: 8px 0;
+      }
+      .flow-arrow svg {
+        transform: rotate(90deg);
+      }
+    }
+
+    /* ---- Tools row ---- */
+    .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      align-items: center;
+    }
+    .tools-row .tools-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-right: 4px;
+    }
+    .tool-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      background: var(--light-grey);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    /* ---- Takeaway pill ---- */
+    .takeaway {
+      background: var(--yellow-light);
+      border-left: 4px solid var(--yellow);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-top: 28px;
+      font-size: 15px;
+    }
+    .takeaway strong {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 6px;
+    }
+
+    /* ---- Shared toolkit block ---- */
+    .toolkit {
+      background: var(--mint-light);
+      border-radius: 20px;
+      padding: 32px 36px;
+      margin: 56px 0 40px;
+    }
+    .toolkit-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #2e7d58;
+      margin-bottom: 8px;
+    }
+    .toolkit h2 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .toolkit-intro {
+      font-size: 15px;
+      color: var(--black);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .toolkit-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .toolkit-step {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    .toolkit-step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .toolkit-step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .toolkit-step-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .toolkit-step p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--black);
+      margin: 0;
+    }
+    .toolkit-step p + p {
+      margin-top: 8px;
+    }
+    .toolkit-step code {
+      background: var(--light-grey);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .toolkit-note {
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-left: 3px solid var(--coral);
+      background: rgba(255,255,255,0.55);
+      border-radius: 0 10px 10px 0;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .toolkit-note strong {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 6px;
+    }
+
+    /* ---- Per-agent tools & setup ---- */
+    .setup {
+      background: var(--blue-light);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin: 20px 0;
+    }
+    .setup-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #3a7a96;
+      margin-bottom: 14px;
+    }
+    .setup-intro {
+      font-size: 14px;
+      color: var(--black);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .setup-step {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .setup-step:last-child {
+      margin-bottom: 0;
+    }
+    .setup-step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .setup-step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .setup-step-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .setup-step-desc {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--grey);
+      margin-bottom: 10px;
+    }
+    .setup-step .prompt {
+      margin-top: 0;
+    }
+
+    /* ---- Expansions (afternoon hacks) ---- */
+    .expansions {
+      margin-top: 32px;
+      padding-top: 28px;
+      border-top: 1px dashed rgba(0,0,0,0.12);
+    }
+    .expansions-header {
+      margin-bottom: 18px;
+    }
+    .expansions-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 8px;
+    }
+    .expansions-header p {
+      font-size: 14px;
+      color: var(--grey);
+      line-height: 1.55;
+      margin: 0;
+    }
+    details.expansion {
+      background: var(--light-grey);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      transition: background 0.15s ease;
+    }
+    details.expansion[open] {
+      background: var(--coral-light);
+      padding-bottom: 20px;
+    }
+    details.expansion summary {
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--black);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      line-height: 1.3;
+    }
+    details.expansion summary::-webkit-details-marker { display: none; }
+    details.expansion summary::before {
+      content: "+";
+      font-weight: 700;
+      color: var(--coral);
+      font-size: 20px;
+      width: 14px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    details.expansion[open] summary::before { content: "−"; }
+    .expansion-body {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    .expansion-body p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      color: var(--black);
+    }
+    .expansion-body p:last-of-type {
+      margin-bottom: 14px;
+    }
+    .expansion-body strong {
+      font-weight: 700;
+    }
+    .expansion-body em {
+      font-style: italic;
+    }
+    .expansion-body .heads-up {
+      background: var(--yellow-light);
+      border-left: 3px solid var(--yellow);
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin: 4px 0 14px;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .expansion-body .heads-up strong {
+      font-weight: 700;
+    }
+    .expansion-body .prompt {
+      margin-top: 4px;
+    }
+
+    /* ---- Why it works (collapsible) ---- */
+    details.why {
+      margin-top: 20px;
+      background: var(--light-grey);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+    details.why summary {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--black);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    details.why summary::-webkit-details-marker { display: none; }
+    details.why summary::before {
+      content: "+";
+      font-weight: 700;
+      color: var(--grey);
+      font-size: 16px;
+    }
+    details.why[open] summary::before { content: "−"; }
+    details.why p {
+      margin-top: 12px;
+      font-size: 15px;
+      color: var(--grey);
+      margin-bottom: 0;
+    }
+
     @media (max-width: 600px) {
       .container { padding: 40px 28px; }
+    }
+
+    /* ---- Apps vs agents contrast ---- */
+    .contrast {
+      margin-bottom: 40px;
+    }
+    .contrast-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 10px;
+    }
+    .contrast-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) {
+      .contrast-grid { grid-template-columns: 1fr; }
+    }
+    .contrast-col {
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .contrast-col.apps { background: var(--coral-light); }
+    .contrast-col.agents { background: var(--mint-light); }
+    .contrast-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .contrast-col.apps .contrast-label { color: #b23a3a; }
+    .contrast-col.agents .contrast-label { color: #2e7d58; }
+    .contrast-col h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .contrast-col p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--black);
+      margin: 0;
+    }
+    .contrast-closing {
+      font-size: 15px;
+      color: var(--grey);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .contrast-closing a {
+      color: var(--black);
+      border-bottom: 1px solid var(--yellow);
+      text-decoration: none;
+    }
+    .contrast-closing a:hover { opacity: 0.7; }
+
+    /* ---- Bridge section (yesterday → today) ---- */
+    .bridge {
+      background: var(--blue-light);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+    }
+    .bridge-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+    .bridge-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .bridge p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .bridge-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 16px;
+    }
+    .bridge-list li {
+      font-size: 15px;
+      line-height: 1.55;
+      padding: 12px 18px;
+      background: var(--white);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .bridge-list li:last-child { margin-bottom: 0; }
+    .bridge-closing {
+      font-size: 15px;
+      font-weight: 500;
+      margin: 0;
+    }
+
+    /* ---- Section header ---- */
+    .section-header {
+      margin-top: 64px;
+      margin-bottom: 28px;
+    }
+    .section-header-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 10px;
+    }
+    .section-header h2 {
+      font-size: clamp(28px, 4vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .section-header p {
+      font-size: 16px;
+      color: var(--grey);
+      margin: 0;
+    }
+
+    /* ---- Spec prompt blocks ---- */
+    .agent-prompt {
+      margin-top: 20px;
+    }
+    .agent-prompt-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 10px;
+    }
+    .prompt {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      background: rgba(0,0,0,0.02);
+    }
+    .prompt-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--grey);
+    }
+    .copy-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .copy-btn:hover { opacity: 0.85; }
+    .copy-btn.copied {
+      background: var(--mint);
+      color: var(--black);
+    }
+    .prompt-body {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.55;
+      padding: 14px;
+      white-space: pre-wrap;
+      color: var(--black);
+    }
+
+    /* ---- Shift carousel (apps vs agents + bridge) ---- */
+    .shift-carousel {
+      margin-bottom: 40px;
+      outline: none;
+    }
+    .shift-viewport {
+      overflow: hidden;
+      border-radius: 20px;
+    }
+    .shift-track {
+      display: flex;
+      transition: transform 0.35s ease;
+    }
+    .shift-slide {
+      flex: 0 0 100%;
+      min-width: 0;
+      padding: 4px;
+    }
+    /* Zero out section margins/dividers inside the carousel */
+    .shift-slide .contrast,
+    .shift-slide .bridge {
+      margin-bottom: 0;
+    }
+    .shift-slide .proactive {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+    .shift-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      gap: 16px;
+    }
+    .shift-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .shift-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.18);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .shift-dot:hover { background: rgba(0,0,0,0.35); }
+    .shift-dot.active {
+      background: var(--black);
+      transform: scale(1.15);
+    }
+    .shift-count {
+      font-size: 13px;
+      color: var(--grey);
+      font-variant-numeric: tabular-nums;
+      margin-left: 12px;
+    }
+    .shift-arrows {
+      display: flex;
+      gap: 8px;
+    }
+    .shift-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: var(--white);
+      font-size: 18px;
+      color: var(--black);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .shift-arrow:hover:not(:disabled) {
+      background: var(--light-grey);
+      border-color: rgba(0,0,0,0.25);
+    }
+    .shift-arrow:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* ---- Proactivity levels ---- */
+    .proactive {
+      margin-top: 80px;
+      padding-top: 56px;
+      border-top: 3px solid var(--black);
+    }
+    .proactive-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+    .proactive-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .proactive-intro {
+      font-size: 16px;
+      color: var(--grey);
+      margin-bottom: 24px;
+    }
+    .levels {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+      align-items: stretch;
+    }
+    @media (max-width: 720px) {
+      .levels { grid-template-columns: 1fr; }
+    }
+    .level-card {
+      border-radius: 16px;
+      padding: 22px 22px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .level-card.manual { background: var(--yellow-light); }
+    .level-card.scheduled,
+    .level-card.always-on { background: var(--light-grey); }
+    .level-pill {
+      margin-left: auto;
+      background: var(--black);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .level-cta {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      font-size: 13px;
+      color: var(--black);
+      line-height: 1.5;
+    }
+    .level-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .level-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--black);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .level-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .level-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .level-what {
+      font-size: 13px;
+      color: var(--grey);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .level-notes {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .level-notes li {
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 3px 0 3px 14px;
+      position: relative;
+    }
+    .level-notes li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.35;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back-link">&larr; Agenda</a>
-    <span class="step-label">Step 1 of 5 &middot; 12 min</span>
-    <h1>Find your task</h1>
-    <p class="lead">What do you do all week &mdash; and which one of those could AI 10x?</p>
+    <a href="index.html" class="back-link">← Agenda</a>
 
-    <div class="placeholder">Outline coming.</div>
+    <div class="eyebrow">Step 1 of 5 · 12 min</div>
+    <h1>Find your task</h1>
+    <p class="intro">What do you do all week — and which one of those could AI 10x? An agent is a program that senses the world, decides what to do, and takes action — on a loop, without you. Here are five real agents to spark ideas. As you read, look for the task in <em>your</em> week that fits this shape.</p>
+
+    <!-- SHIFT CAROUSEL: apps vs agents + bridge -->
+    <div class="shift-carousel" id="shift-carousel" tabindex="0" aria-label="The mental shift — swipe or use arrows">
+      <div class="shift-viewport">
+        <div class="shift-track">
+          <!-- Slide 1: Apps vs agents -->
+          <div class="shift-slide">
+            <section class="contrast">
+              <div class="contrast-eyebrow">The shift</div>
+              <h2 class="contrast-title">Apps vs agents</h2>
+              <div class="contrast-grid">
+                <div class="contrast-col apps">
+                  <div class="contrast-label">App</div>
+                  <h3>A tool you use to do something</h3>
+                  <p>An app is a user interface. It gives you a clean way to work with data or systems that would otherwise be unreadable. Your email app helps you manage email. Canva lets you design. Whoop shows you your health data instead of a raw database.</p>
+                </div>
+                <div class="contrast-col agents">
+                  <div class="contrast-label">Agent</div>
+                  <h3>Skips the tool — just does the thing</h3>
+                  <p>An agent cuts out the interface. Instead of a better way to manage your email, it handles the email. Instead of a dashboard to track competitors, it tells you what changed.</p>
+                </div>
+              </div>
+              <p class="contrast-closing">This is a real shift from how we're used to thinking about software. For a lot of tasks, the answer isn't "build me an app to do this." It's "just get this done." Apps are a means — often you only wanted the end. Nan Yu puts it well in <a href="https://thenanyu.com/skip-to-the-end.html" target="_blank" rel="noopener">Skip to the End</a>: don't make drills or shovels, make holes.</p>
+            </section>
+          </div>
+
+          <!-- Slide 2: Yesterday → today -->
+          <div class="shift-slide">
+            <section class="bridge">
+              <div class="bridge-eyebrow">From yesterday to today</div>
+              <h3 class="bridge-title">You've already been using agents</h3>
+              <p>In Lovable yesterday, you described what you wanted and it wrote the code, deployed it, and fixed its own errors. You saw a chat window — under the hood, that was a coding agent.</p>
+              <p>Today you'll use Claude Code, another coding agent. Same idea, just more direct — you're sitting closer to the engine. The shift is in what you're building <em>with</em> it:</p>
+              <ul class="bridge-list">
+                <li><strong>Yesterday:</strong> used an agent to build <strong>an app</strong> — a tool someone would use.</li>
+                <li><strong>Today:</strong> use an agent to build <strong>another agent</strong> — a thing that just does the job.</li>
+              </ul>
+              <p class="bridge-closing">You've been using agents the whole time. Today we stop using the ones someone else built and start building our own.</p>
+            </section>
+          </div>
+
+          <!-- Slide 3: How proactive -->
+          <div class="shift-slide">
+            <section class="proactive">
+              <div class="proactive-eyebrow">One more decision</div>
+              <h2 class="proactive-title">How proactive should your agent be?</h2>
+              <p class="proactive-intro">Every agent needs a trigger — something that tells it to start. You have three options, from "you push a button" to "it runs without you."</p>
+
+              <div class="levels">
+                <div class="level-card manual">
+                  <div class="level-header">
+                    <div class="level-num">1</div>
+                    <div class="level-label">Manual</div>
+                    <span class="level-pill">Start here</span>
+                  </div>
+                  <div class="level-name">You run it yourself</div>
+                  <p class="level-what">A slash command or prompt you fire off when you want it. Something like "run my morning briefing" right when you need it.</p>
+                  <ul class="level-notes">
+                    <li>Works anytime you open Claude Code</li>
+                    <li>Easy to change and iterate</li>
+                    <li>You control exactly when it runs</li>
+                  </ul>
+                </div>
+
+                <div class="level-card scheduled">
+                  <div class="level-header">
+                    <div class="level-num">2</div>
+                    <div class="level-label">Scheduled</div>
+                  </div>
+                  <div class="level-name">Cron job on your computer</div>
+                  <p class="level-what">A schedule you set — "every weekday at 7am." The catch: your computer has to be on and awake at that time.</p>
+                  <ul class="level-notes">
+                    <li>Runs while your laptop is open</li>
+                    <li>Won't fire if it's closed or asleep</li>
+                    <li>Works best for schedules that match your working hours</li>
+                  </ul>
+                </div>
+
+                <div class="level-card always-on">
+                  <div class="level-header">
+                    <div class="level-num">3</div>
+                    <div class="level-label">Always-on</div>
+                  </div>
+                  <div class="level-name">Dedicated machine or cloud</div>
+                  <p class="level-what">A Mac mini at home, or a cloud server. Always running, so the agent can fire overnight or while you're away.</p>
+                  <ul class="level-notes">
+                    <li>Runs anytime, anywhere</li>
+                    <li>More setup and maintenance</li>
+                    <li>Worth it only for agents you've proven</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="shift-controls">
+        <div class="shift-dots" id="shift-dots" role="tablist" aria-label="Slide navigation"></div>
+        <div class="shift-arrows">
+          <button class="shift-arrow" id="shift-prev" type="button" aria-label="Previous slide">‹</button>
+          <button class="shift-arrow" id="shift-next" type="button" aria-label="Next slide">›</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHARED TOOLKIT -->
+    <div class="toolkit">
+      <div class="toolkit-eyebrow">Before you start · Your toolkit</div>
+      <h2>What you'll use to build these</h2>
+      <p class="toolkit-intro">On Day 1 you used Lovable, which handled everything — hosting, deployment, the works. Day 2 is more hands-on, but the same idea: you tell an agent what you want and it does the building. Your main tool is <strong>Claude Code</strong>, the coding mode in the Claude desktop app. For the agents on this page, that's what you'll use.</p>
+
+      <div class="toolkit-steps">
+        <div class="toolkit-step">
+          <div class="toolkit-step-header">
+            <div class="toolkit-step-num">1</div>
+            <div class="toolkit-step-title">Open Claude Code</div>
+          </div>
+          <p>Open the Claude desktop app and switch to Code mode. If you haven't downloaded it, grab it at <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>. The first time you open Code mode it'll ask for permission to access files on your computer — allow it.</p>
+        </div>
+
+        <div class="toolkit-step">
+          <div class="toolkit-step-header">
+            <div class="toolkit-step-num">2</div>
+            <div class="toolkit-step-title">Start a fresh project (with a safety net)</div>
+          </div>
+          <p>Every agent lives in its own folder. Tell Claude Code: <em>"Create a new folder called <code>school-triage</code> (or whatever you're building) in my home directory, initialize git in it, and open it as our working directory."</em></p>
+          <p>Git is a version history running quietly underneath. It means you can always say <em>"undo that last change"</em> or <em>"revert to the last working version"</em> — without learning any git commands. Think of it as unlimited undo for the whole folder.</p>
+        </div>
+
+        <div class="toolkit-step">
+          <div class="toolkit-step-header">
+            <div class="toolkit-step-num">3</div>
+            <div class="toolkit-step-title">Authorize the tools it needs</div>
+          </div>
+          <p>Each agent needs permission to read or write specific things (Gmail, Calendar, Slack, etc.). The per-agent setup block below each lesson walks you through the exact steps. One rule that applies everywhere: <strong>API keys are passwords.</strong> Don't paste them into chat, commit them to GitHub, or share them. Claude Code knows how to store them safely — just follow its instructions.</p>
+        </div>
+
+        <div class="toolkit-step">
+          <div class="toolkit-step-header">
+            <div class="toolkit-step-num">4</div>
+            <div class="toolkit-step-title">Pick a trigger</div>
+          </div>
+          <p>Three options — see the Manual / Scheduled / Always-on card up above. Start with <strong>Manual</strong>: you run it yourself with a slash command. Once it's been reliable for a few days, ask Claude Code to put it on a cron schedule. Always-on (a Mac mini or cloud server) is an afternoon stretch goal, not day-one.</p>
+        </div>
+      </div>
+
+      <div class="toolkit-note">
+        <strong>Where Cowork fits</strong>
+        Cowork is Claude's mode for polished knowledge-work artifacts — slides, docs, spreadsheets. For these agents you'll stay in Claude Code; it can do everything you need. The one place Cowork earns a spot is if an agent produces a document that needs to look nice (like a status update for your leadership team) — you can hand the content off to Cowork for final formatting.
+      </div>
+    </div>
+
+    <section class="section-header">
+      <div class="section-header-eyebrow">Five real agents</div>
+      <h2>Breaking down agents</h2>
+      <p>Let's look at five specific agents and see how they work. For each one: what it reads, how it decides, what it does in the world.</p>
+    </section>
+
+    <div class="framework">
+      <div class="framework-title">The framework</div>
+      <div class="framework-grid">
+        <div class="framework-item">
+          <h4>Sense</h4>
+          <p>What data does the agent read? Email, calendar, docs, the web.</p>
+        </div>
+        <div class="framework-item">
+          <h4>Plan</h4>
+          <p>What decision does it make with what it sees?</p>
+        </div>
+        <div class="framework-item">
+          <h4>Act</h4>
+          <p>What does it do in the world? Write, send, schedule, order.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">Five agents</div>
+      <ol>
+        <li><a href="#agent-1">School email triage</a></li>
+        <li><a href="#agent-2">Meeting prep</a></li>
+        <li><a href="#agent-3">Weekly competitor digest</a></li>
+        <li><a href="#agent-4">Grocery list from meal plan</a></li>
+        <li><a href="#agent-5">Team status update</a></li>
+      </ol>
+    </div>
+
+    <!-- AGENT 1 -->
+    <section class="lesson" id="agent-1">
+      <div class="lesson-num">1</div>
+      <h2>School email triage</h2>
+      <p class="lesson-sub">Runs every morning at 7am. Turns the school-email blur into a to-do list.</p>
+
+      <div class="flow">
+        <div class="flow-step sense">
+          <div class="flow-label">Sense</div>
+          <h4>Reads this morning's school emails</h4>
+          <ul>
+            <li>Gmail inbox, filtered to school senders</li>
+            <li>Attached PDFs and forms</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step plan">
+          <div class="flow-label">Plan</div>
+          <h4>Pulls out what you actually need</h4>
+          <ul>
+            <li>Dates and deadlines</li>
+            <li>Forms, permission slips, $ owed</li>
+            <li>Action items vs FYI</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step act">
+          <div class="flow-label">Act</div>
+          <h4>Delivers a summary you can scan in 30 seconds</h4>
+          <ul>
+            <li>Adds events to Google Calendar</li>
+            <li>Creates tasks in Reminders</li>
+            <li>Emails you the digest</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tools-row">
+        <span class="tools-label">Tools</span>
+        <span class="tool-pill">Gmail</span>
+        <span class="tool-pill">Google Calendar</span>
+        <span class="tool-pill">Apple Reminders</span>
+        <span class="tool-pill">Claude</span>
+      </div>
+
+      <div class="setup">
+        <div class="setup-label">Tools &amp; setup</div>
+        <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions.</p>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">1</div>
+            <div class="setup-step-title">Authorize Gmail (read)</div>
+          </div>
+          <p class="setup-step-desc">So the agent can scan this morning's school emails.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through giving my agent read access to my Gmail. Tell me exactly what I need to click, what keys I need to get (and where to get them), and how to save them safely so I don't leak them. I'm new to this — explain in plain English and pause for my questions.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">2</div>
+            <div class="setup-step-title">Authorize Google Calendar (write)</div>
+          </div>
+          <p class="setup-step-desc">So the agent can add events for deadlines and permission slips.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through giving my agent write access to my primary Google Calendar so it can add events. Same level of detail as Gmail — every click, every key, plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">3</div>
+            <div class="setup-step-title">Connect Apple Reminders</div>
+          </div>
+          <p class="setup-step-desc">So the agent can create tasks (forms to fill out, fees to pay).</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through letting my agent create tasks in Apple Reminders on my Mac. Tell me what permissions I need to grant on my Mac (e.g., in System Settings) and how to connect Claude Code to Reminders. Step by step, plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">4</div>
+            <div class="setup-step-title">Put it on a schedule</div>
+          </div>
+          <p class="setup-step-desc">Only after the manual version works. Runs every weekday at 7am.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Once my school-email agent works when I run it manually, I want it to run every weekday at 7am automatically. Set this up using cron on my Mac. Walk me through what gets installed, how to check that it ran successfully, and how to turn it off if I need to. Plain English.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-prompt">
+        <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
+        <div class="prompt">
+          <div class="prompt-header">
+            <span class="prompt-label">Spec prompt</span>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+          <div class="prompt-body">I want to build an agent that runs every morning and scans my Gmail for school emails. It should pull out dates, deadlines, forms I need to fill out, and money I owe, then add events to my Google Calendar, create tasks in Apple Reminders, and email me a short digest. Can you start by writing a spec I can feed into a coding agent to build this? Be super clear and specific about how every piece of it will work.</div>
+        </div>
+      </div>
+
+      <div class="expansions">
+        <div class="expansions-header">
+          <div class="expansions-eyebrow">Expand it · afternoon hacks</div>
+          <p>Finished the base version early? Pick one of these and keep going. Each adds new data, a new feature, or a new audience. Tap to open, then paste the prompt into Claude Code — it'll walk you through the changes step by step.</p>
+        </div>
+
+        <details class="expansion">
+          <summary>Family calendar merge</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Your agent already knows about school events, but it doesn't know about your family's other commitments. This makes it check your shared family calendar <em>before</em> scheduling anything, so it can warn you when a school event clashes with something you already have planned.</p>
+            <p><strong>Why it's useful.</strong> Instead of "permission slip due Friday," you get "permission slip due Friday — FYI, you've got a doctor's appointment that afternoon, might want to handle this Thursday night."</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I already have an agent that reads my school emails and adds events to my Google Calendar. I want to expand it so that before suggesting or adding any event, it first checks my family's shared Google Calendar for conflicts. If there's a clash, it should flag it in the digest instead of silently scheduling. Walk me through exactly what I need to change, step by step. Explain any technical parts in plain English — I'm new to coding. Ask me any questions you need (like which calendar is the "family" one) before you start.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Co-parent digest</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Right now the agent emails only you. This sends a second copy to your partner, in a tone that suits them — so they see the same info at the same time, no forwarding required.</p>
+            <p><strong>Why it's useful.</strong> You stop being the bottleneck. If your partner likes bullet points and no preamble, they get that version. You keep yours.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My agent currently emails me a school digest every morning. I want to add a second recipient — my partner — who gets the same information but in a different tone. First, ask me what tone works best for my partner (e.g., shorter, more direct, just bullets). Then help me update the agent to produce a second version of the digest in that tone and email it to them at the same time. Walk me through the changes step by step and explain what each part of the code is doing.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Escalate what's urgent</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Some things can wait for tomorrow's 7am email. Some things can't. This adds a second channel — a text message — for the truly urgent things (due today, signature needed by EOD, money owed within 24 hours).</p>
+            <p><strong>Why it's useful.</strong> You stop missing same-day stuff that arrives after the morning digest goes out.</p>
+            <p class="heads-up"><strong>Heads up.</strong> Two realistic ways to send the text: <strong>Twilio</strong> (cloud SMS, ~$0.01/text, needs sign-up and a phone number) or <strong>Mac Shortcuts / iMessage</strong> (free, works only when your Mac is awake). Claude will walk you through the tradeoffs.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I have an agent that emails me a school digest every morning. I want to add urgency detection. Anything due today, requiring a signature by end of day, or involving money owed in the next 24 hours should trigger a text message to my phone — not wait for tomorrow's email. First, walk me through the two realistic options for sending myself a text — Twilio (cloud SMS, ~$0.01/text, requires sign-up and a phone number) or Mac Shortcuts / iMessage (free, only works when your Mac is awake) — and help me pick one based on my setup. Then update the agent to split items into "urgent → text" and "everything else → email." Plain English, pause for my questions.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Auto-draft replies</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> For simple school emails — field trip permission, "yes my kid rides the bus next week," confirmations — your agent already saw the question. This goes one step further and leaves a pre-written reply sitting in your Gmail drafts. You open Gmail, skim, hit send.</p>
+            <p><strong>Why it's useful.</strong> The digest tells you what needs a reply. This writes the reply <em>for</em> you, so the only thing you have to do is approve it.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My school-email agent currently flags forms and yes/no questions in the digest. I want to take it further: for any email that just needs a short reply (permission slip yes/no, confirm attendance, quick acknowledgment), the agent should draft the reply in my Gmail Drafts folder — not send it, just draft. Walk me through how to give the agent permission to create Gmail drafts, then update the logic so it knows which emails deserve a drafted reply vs. just a flag. Explain every step in plain English — assume I haven't worked with Gmail permissions before.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Priority memory</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Right now the agent treats every email the same. This gives it a simple memory file — a notepad it reads at the start of each run and updates at the end — so it can learn which teachers, kids, or topics matter most to you over time.</p>
+            <p><strong>Why it's useful.</strong> Week 1, the agent ranks items by date. Week 4, it also knows your 3rd-grader's teacher sends more urgent stuff than the kindergarten general-info list, and it puts those first.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my school-email agent to get smarter over time. Help me add a simple memory file — a plain text file the agent reads at the start of each run and updates at the end — that tracks which senders, keywords, or topics I care about most. When I reply to, forward, or act on an email, the agent should nudge that sender's priority up. Over time, the digest should use this memory to rank items. Walk me through where the memory file lives, how the agent reads and writes it, and how the ranking works. Explain in plain English — assume I haven't worked with files in code before.</div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- AGENT 2 -->
+    <section class="lesson" id="agent-2">
+      <div class="lesson-num">2</div>
+      <h2>Meeting prep</h2>
+      <p class="lesson-sub">Runs every night at 9pm. You wake up to a briefing doc for tomorrow's meetings.</p>
+
+      <div class="flow">
+        <div class="flow-step sense">
+          <div class="flow-label">Sense</div>
+          <h4>Looks at tomorrow's calendar</h4>
+          <ul>
+            <li>Event titles and attendees</li>
+            <li>Meeting descriptions and linked docs</li>
+            <li>Past emails with each attendee</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step plan">
+          <div class="flow-label">Plan</div>
+          <h4>Researches each person and topic</h4>
+          <ul>
+            <li>Company website + public writing</li>
+            <li>Recent news about their company</li>
+            <li>Prior context from past threads</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step act">
+          <div class="flow-label">Act</div>
+          <h4>Writes one prep doc per meeting</h4>
+          <ul>
+            <li>Who you're meeting + what they care about</li>
+            <li>3 suggested questions</li>
+            <li>Delivered to your inbox overnight</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tools-row">
+        <span class="tools-label">Tools</span>
+        <span class="tool-pill">Google Calendar</span>
+        <span class="tool-pill">Gmail</span>
+        <span class="tool-pill">Web search</span>
+        <span class="tool-pill">Claude</span>
+      </div>
+
+      <div class="setup">
+        <div class="setup-label">Tools &amp; setup</div>
+        <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions.</p>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">1</div>
+            <div class="setup-step-title">Authorize Google Calendar (read)</div>
+          </div>
+          <p class="setup-step-desc">So the agent can see tomorrow's meetings and their attendees.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through giving my agent read access to my primary Google Calendar so it can see tomorrow's meetings. Tell me exactly what I need to click, what keys I need (and where to get them), and how to save them safely. I'm new to this — plain English, pause for my questions.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">2</div>
+            <div class="setup-step-title">Authorize Gmail (read)</div>
+          </div>
+          <p class="setup-step-desc">So the agent can pull prior context from past threads with each attendee.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through giving my agent read access to my Gmail so it can look up past email threads with each meeting attendee. Same level of detail as the Calendar step — every click, every key, plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">3</div>
+            <div class="setup-step-title">Set up web search</div>
+          </div>
+          <p class="setup-step-desc">So the agent can look up companies and recent news.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through setting up web search for my agent so it can look up attendees' companies and recent news. Tell me the easiest option, what (if anything) it costs, and how to connect it to Claude Code. Plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">4</div>
+            <div class="setup-step-title">Put it on a schedule</div>
+          </div>
+          <p class="setup-step-desc">Only after the manual version works. Runs nightly at 9pm so prep docs are ready by morning.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Once my meeting-prep agent works when I run it manually, I want it to run every night at 9pm so I wake up to prep docs. Set this up using cron on my Mac. Walk me through what gets installed, how to check it ran, and how to turn it off. Plain English.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-prompt">
+        <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
+        <div class="prompt">
+          <div class="prompt-header">
+            <span class="prompt-label">Spec prompt</span>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+          <div class="prompt-body">I want to build an agent that runs every night at 9pm, looks at tomorrow's Google Calendar, and writes a short prep doc for each meeting. For each attendee it should pull context from past emails, the company website, and any public writing or interviews they've done (articles, podcasts, public profiles). It should email me the prep docs overnight so I have them first thing in the morning. Can you start by writing a spec I can feed into a coding agent to build this? Be super clear and specific about how every piece of it will work.</div>
+        </div>
+      </div>
+
+      <div class="expansions">
+        <div class="expansions-header">
+          <div class="expansions-eyebrow">Expand it · afternoon hacks</div>
+          <p>Finished the base version early? Pick one of these and keep going. Each adds new data, a new feature, or a new audience. Tap to open, then paste the prompt into Claude Code — it'll walk you through the changes step by step.</p>
+        </div>
+
+        <details class="expansion">
+          <summary>Your own CRM memory</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Right now the agent researches each person from scratch. This gives it a memory file per person — a short note it reads before building the prep and updates after the meeting — so the briefing gets richer every time you meet them again.</p>
+            <p><strong>Why it's useful.</strong> Before your first coffee with Sarah, you get her background. Before your third, the agent reminds you she asked about pricing last time and you promised to follow up with case studies.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My meeting-prep agent currently researches each person from scratch. I want to give it a memory — a small file per person it reads before building the prep doc and updates after the meeting based on my notes. Help me set up a folder of memory files (one per person), update the prep flow to check for an existing file first, and update the file after I paste my meeting notes. Walk me through each step in plain English — assume I haven't managed files in code before.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Post-meeting follow-up</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> The agent preps you before the meeting. This extends it to after — it reads your notes and drafts the recap or thank-you email, then leaves it in Gmail drafts.</p>
+            <p><strong>Why it's useful.</strong> The hour after a meeting is when follow-up matters most and is easiest to drop. You just approve the draft instead of starting from scratch.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I have a meeting-prep agent. I want to extend it so after each meeting, it also drafts a follow-up email based on my notes. The flow: I paste my meeting notes into a shared spot (help me pick one — Apple Notes, Google Doc, wherever's easiest), the agent reads them, and drafts a recap/thank-you email in my Gmail drafts. It should never send — just draft. Walk me through setup and code changes step by step, in plain English.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Signal layer</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Generic company news is low-signal. This narrows the research to content the person produced themselves — articles they wrote or were quoted in, podcast appearances, their personal blog or Substack, conference talks on YouTube. All reachable through the web search the agent already has.</p>
+            <p><strong>Why it's useful.</strong> "Here's the article she wrote last week about pricing strategy" is a way better opener than "Here's their latest earnings."</p>
+            <p class="heads-up"><strong>Heads up.</strong> Skipping LinkedIn and Twitter/X on purpose — LinkedIn blocks bots, and Twitter/X's API is paid with tight limits. Everything else here comes through plain web search, which you already have set up.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My meeting-prep agent researches each attendee. Right now it pulls generic company news. I want it to prioritize content the person themselves produced — articles they wrote or were quoted in, podcast appearances, their personal blog or Substack, conference talks on YouTube. (Skip LinkedIn and Twitter/X — LinkedIn blocks bots and the X API is paid and limited. Everything else can come through the web search the agent already has.) Walk me through how to update the research logic to prefer these sources, and how the prep doc should surface this info. Step by step in plain English.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Meeting-type templates</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> A sales call, a 1:1, and a customer interview each need different prep. This lets you define a template per meeting type, and the agent picks the right one based on the meeting title and attendees.</p>
+            <p><strong>Why it's useful.</strong> No more sales-style prep for a 1:1 with your teammate. Each meeting gets prep that actually matches.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my meeting-prep agent to recognize different meeting types (e.g., sales call, 1:1, interview, investor update) and prep each one differently. Help me set up a template file per meeting type that defines what to include in the prep (questions to ask, what to research, what to summarize). Then help the agent classify each meeting based on its title and attendees and pick the right template. Walk me through creating the templates, classifying meetings, and applying the right one. Plain English, step by step.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Slack dossier</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Email is fine, but a pre-meeting dossier works better on your phone. This posts each prep doc to a private Slack channel so you can scroll through it on the way to the meeting.</p>
+            <p><strong>Why it's useful.</strong> You check Slack on your phone during the walk to a coffee shop. You don't dig through your email archive. This meets you where you already are.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My meeting-prep agent currently emails me prep docs. I want to also (or instead) post each prep doc to a private Slack channel so I can read on my phone. Walk me through setting up a private Slack channel for this, getting the agent permission to post to it, and updating the delivery step to post there. Explain in plain English and assume I haven't connected a bot to Slack before.</div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- AGENT 3 -->
+    <section class="lesson" id="agent-3">
+      <div class="lesson-num">3</div>
+      <h2>Weekly competitor digest</h2>
+      <p class="lesson-sub">Runs Monday at 7am. You get a one-screen summary of what moved last week.</p>
+
+      <div class="flow">
+        <div class="flow-step sense">
+          <div class="flow-label">Sense</div>
+          <h4>Scans news across a list of competitors</h4>
+          <ul>
+            <li>Press release pages and RSS</li>
+            <li>News search for each company</li>
+            <li>Their blog and company announcements</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step plan">
+          <div class="flow-label">Plan</div>
+          <h4>Filters for what's strategically meaningful</h4>
+          <ul>
+            <li>Launches, pricing changes, key hires</li>
+            <li>Funding rounds, M&amp;A</li>
+            <li>Groups items by theme</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step act">
+          <div class="flow-label">Act</div>
+          <h4>Sends a digest, flags anything urgent</h4>
+          <ul>
+            <li>Email with a ranked summary</li>
+            <li>Links to sources</li>
+            <li>Urgent items get a separate alert</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tools-row">
+        <span class="tools-label">Tools</span>
+        <span class="tool-pill">Web search</span>
+        <span class="tool-pill">RSS / news feeds</span>
+        <span class="tool-pill">Gmail</span>
+        <span class="tool-pill">Claude</span>
+      </div>
+
+      <div class="setup">
+        <div class="setup-label">Tools &amp; setup</div>
+        <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions.</p>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">1</div>
+            <div class="setup-step-title">Build your competitor watchlist</div>
+          </div>
+          <p class="setup-step-desc">A simple file or Google Sheet the agent reads each week. Easy to edit as strategy shifts.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Help me set up a simple watchlist of the competitors my agent should track. Walk me through where the list should live (plain text file, Google Sheet, or Notion — help me pick the easiest), how to format it, and how the agent reads it at the start of each run. I want to be able to add or remove competitors later without touching code. Plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">2</div>
+            <div class="setup-step-title">Set up web search + RSS</div>
+          </div>
+          <p class="setup-step-desc">So the agent can scan news and press release pages across your watchlist.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through setting up web search and RSS feed reading for my agent. Tell me the easiest options, what any of them cost, and how to connect them to Claude Code. Plain English, every click.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">3</div>
+            <div class="setup-step-title">Authorize Gmail (send)</div>
+          </div>
+          <p class="setup-step-desc">So the agent can email you the digest each Monday.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through giving my agent permission to send email via Gmail (so it can email me the digest). Tell me exactly what to click, what keys I need, and how to save them safely. Plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">4</div>
+            <div class="setup-step-title">Put it on a schedule</div>
+          </div>
+          <p class="setup-step-desc">Only after the manual version works. Runs Monday at 7am so it's ready before your week starts.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Once my competitor-digest agent works when I run it manually, I want it to run every Monday at 7am. Set this up using cron on my Mac. Walk me through what gets installed, how to check it ran, and how to turn it off. Plain English.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-prompt">
+        <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
+        <div class="prompt">
+          <div class="prompt-header">
+            <span class="prompt-label">Spec prompt</span>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+          <div class="prompt-body">I want to build an agent that runs every Monday at 7am and scans news about a list of competitors. It should check press release pages, RSS feeds, and each competitor's own blog, filter for strategically meaningful news (launches, pricing changes, key hires, funding, M&amp;A), group by theme, and email me a ranked digest with urgent items flagged separately. Can you start by writing a spec I can feed into a coding agent to build this? Be super clear and specific about how every piece of it will work.</div>
+        </div>
+      </div>
+
+      <div class="expansions">
+        <div class="expansions-header">
+          <div class="expansions-eyebrow">Expand it · afternoon hacks</div>
+          <p>Finished the base version early? Pick one of these and keep going. Each adds new data, a new feature, or a new audience. Tap to open, then paste the prompt into Claude Code — it'll walk you through the changes step by step.</p>
+        </div>
+
+        <details class="expansion">
+          <summary>Editable watchlist</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Right now the competitor list is buried in the code. This moves it to a simple file (or a Google Sheet) so you can add or remove competitors anytime without touching code.</p>
+            <p><strong>Why it's useful.</strong> Strategy shifts, and so does who you're watching. Editing a shared sheet is a lot easier than finding and editing code every time.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My competitor-digest agent has a hardcoded list of competitors. I want to move that list out of the code and into something I can edit on my own — either a plain text file, a Google Sheet, or a Notion page (help me pick the easiest). The agent should read the current list at the start of each run. Walk me through creating the list, updating the agent to read from it, and making sure adding or removing a competitor doesn't require code changes. Plain English, step by step.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Pricing diffs</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Pricing is the highest-signal competitive move and the easiest to miss. This takes a snapshot of each competitor's pricing page every week, compares it to last week's, and highlights exactly what changed.</p>
+            <p><strong>Why it's useful.</strong> "Figma lowered their team tier from $15 to $12" lands in your inbox without you ever visiting their site.</p>
+            <p class="heads-up"><strong>Heads up.</strong> Works cleanly on many sites, blocked on some — Cloudflare-protected pages and "contact us" pricing won't scrape. Claude will tell you which of <em>your</em> competitors are reachable and set up a "flag for manual screenshot" fallback for the rest.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want to add a pricing-change tracker to my competitor-digest agent. Each week, it should visit each competitor's pricing page, save a snapshot, and compare it to the snapshot from last week. If anything changed (prices, plans, feature lists), it should call that out in the digest. First, check which of my competitors' pricing pages are actually reachable (some will be behind bot-walls like Cloudflare, and some will be "contact us" with no public pricing) and tell me which ones are and aren't. For unreachable sites, set up a "flag for manual screenshot" step instead. Walk me through saving snapshots, comparing them, and what to do the first run (no previous week to compare). Plain English — I've never worked with web scraping before.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Hiring velocity</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Where a company is hiring is where they're investing. This counts open roles on each competitor's careers page every week and flags big jumps by department — a strategy leak before any announcement.</p>
+            <p><strong>Why it's useful.</strong> "Anthropic added 8 GTM roles this week, up from 2 last week" is a strong signal about priorities before they're ever shared publicly.</p>
+            <p class="heads-up"><strong>Heads up.</strong> Much easier when a competitor uses a standard hiring tool — <strong>Greenhouse, Lever, or Ashby</strong> — because those publish role data as JSON that's simple to read. Custom-built career pages are harder. Claude will tell you which of yours fall into which bucket.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my competitor-digest agent to track hiring as well. Each week, it should visit each competitor's careers page, count the number of open roles, and group them by department (engineering, sales, marketing, etc.). It should compare to last week and flag any department with a big jump. First, check which of my competitors use standard hiring tools (Greenhouse, Lever, Ashby, Workable) vs. custom career pages — the standard ones publish JSON that's much easier to parse. For the easy ones, pull the structured data; for the hard ones, tell me what's possible and what isn't. Walk me through saving counts over time and defining a "big jump." Plain English, step by step.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Customer voice</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> What competitors say about themselves is spin. What their customers say is signal. This pulls mentions from the places you can actually reach as a solo builder — <strong>Reddit</strong>, <strong>Hacker News</strong>, and product reviews (App Store, Trustpilot) where they apply — and flags sentiment shifts each week.</p>
+            <p><strong>Why it's useful.</strong> If complaints about a competitor's new feature just spiked, that might be your window. Normally you'd miss it.</p>
+            <p class="heads-up"><strong>Heads up.</strong> Skipping G2 and Twitter/X on purpose — G2 blocks scraping and has no public API, and Twitter/X's API is paid with tight limits. The sources above are reachable: Reddit has a working API, Hacker News has a free Algolia search endpoint, and app/product review data is public.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my competitor-digest agent to also listen to what customers are saying. Each week, it should search Reddit (using their API), Hacker News (using the free Algolia search API), and product reviews where they apply (App Store, Trustpilot) for mentions of each competitor, summarize the general sentiment, and flag notable shifts (e.g., a spike in complaints). Skip G2 and Twitter/X — G2 blocks scraping and X's API is paid and limited. Walk me through connecting to each reachable source, how to pull mentions, and how to summarize sentiment. Plain English — assume I haven't used search APIs before.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Team Slack post</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Right now the digest stops at your inbox. This posts it to a <code>#competitive</code> Slack channel so your team sees the same info at the same time and can react.</p>
+            <p><strong>Why it's useful.</strong> Your GTM team might notice something you missed. Your product team might want a specific section. Broadcasting it unlocks that.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My competitor-digest agent currently emails me. I want it to also post the digest as a thread in a private Slack channel called #competitive so my team can see and react to it. Walk me through creating the channel, getting the agent permission to post there, and formatting the digest so it reads well in Slack (not just in email). Explain step by step in plain English.</div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- AGENT 4 -->
+    <section class="lesson" id="agent-4">
+      <div class="lesson-num">4</div>
+      <h2>Grocery list from meal plan</h2>
+      <p class="lesson-sub">Runs Friday afternoon. By the time you sit down, the order is ready to confirm.</p>
+
+      <div class="flow">
+        <div class="flow-step sense">
+          <div class="flow-label">Sense</div>
+          <h4>Reads your meal plan for the week</h4>
+          <ul>
+            <li>Meal plan doc or note</li>
+            <li>Your recipe file</li>
+            <li>Pantry inventory (if you keep one)</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step plan">
+          <div class="flow-label">Plan</div>
+          <h4>Builds a grouped shopping list</h4>
+          <ul>
+            <li>Cross-refs recipes with what you have</li>
+            <li>Groups by produce, protein, pantry</li>
+            <li>Skips staples you likely have on hand</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step act">
+          <div class="flow-label">Act</div>
+          <h4>Adds everything to your grocery cart</h4>
+          <ul>
+            <li>Populates Instacart or similar</li>
+            <li>Or texts you the list</li>
+            <li>You review and hit order</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tools-row">
+        <span class="tools-label">Tools</span>
+        <span class="tool-pill">Google Docs / Notes</span>
+        <span class="tool-pill">Instacart</span>
+        <span class="tool-pill">Claude</span>
+      </div>
+
+      <div class="setup">
+        <div class="setup-label">Tools &amp; setup</div>
+        <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions.</p>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">1</div>
+            <div class="setup-step-title">Point it at your meal plan + recipes</div>
+          </div>
+          <p class="setup-step-desc">Pick where your meal plan lives (Google Doc, Apple Note, Notion), then tell the agent how to read it.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Help me set up the meal plan and recipe files my agent will read. Walk me through where they should live (Google Doc, Apple Notes, Notion, plain text — help me pick the easiest), what format works best, and how the agent finds and reads them. If I need to authorize access (like Google Docs), walk me through that too. Plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">2</div>
+            <div class="setup-step-title">Connect Instacart</div>
+          </div>
+          <p class="setup-step-desc">Heads up: Instacart doesn't have a simple public API. Claude will explain your realistic options — including "have the agent text you the list to review and copy in" as a low-tech fallback.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through the easiest way for my agent to get my grocery list into Instacart — I know Instacart doesn't have a simple public API. Tell me my realistic options (browser automation, a copy-paste workflow where the agent texts me the list, a third-party service, etc.), which is easiest and safest for a beginner, and set that one up. Plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">3</div>
+            <div class="setup-step-title">Put it on a schedule</div>
+          </div>
+          <p class="setup-step-desc">Only after the manual version works. Runs Friday afternoon so the order is ready to confirm.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Once my grocery agent works when I run it manually, I want it to run every Friday at 3pm so the cart is ready to review. Set this up using cron on my Mac. Walk me through what gets installed, how to check it ran, and how to turn it off. Plain English.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-prompt">
+        <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
+        <div class="prompt">
+          <div class="prompt-header">
+            <span class="prompt-label">Spec prompt</span>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+          <div class="prompt-body">I want to build an agent that reads my weekly meal plan doc and my recipe file, cross-references what I already have in my pantry, and builds a grouped shopping list (produce, protein, pantry). It should skip staples I likely have on hand, then add items to Instacart or text me the list so I can review and place the order. Can you start by writing a spec I can feed into a coding agent to build this? Be super clear and specific about how every piece of it will work.</div>
+        </div>
+      </div>
+
+      <div class="expansions">
+        <div class="expansions-header">
+          <div class="expansions-eyebrow">Expand it · afternoon hacks</div>
+          <p>Finished the base version early? Pick one of these and keep going. Each adds new data, a new feature, or a new audience. Tap to open, then paste the prompt into Claude Code — it'll walk you through the changes step by step.</p>
+        </div>
+
+        <details class="expansion">
+          <summary>Learning pantry</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Right now either you maintain a pantry file by hand or there isn't one. This has the agent update the pantry file automatically after each shop — so it knows what you bought and can skip duplicates more accurately each week.</p>
+            <p><strong>Why it's useful.</strong> Week 1 the agent guesses at your pantry. Week 10 it knows. The "skip staples" logic gets noticeably smarter the longer you use it.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my grocery agent to keep track of what's in my pantry automatically. After each Instacart order (or after I manually confirm what I got), it should update a pantry file — adding the items I bought and estimating when they'd run out based on how often I cook recipes that use them. When it builds next week's list, it should use this updated pantry file to skip duplicates. Walk me through creating the pantry file, updating it after each shop, and using it when building the list. Plain English, step by step.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Recipe-URL import</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Most meal planning happens by pasting recipe links into a note. This has the agent open each link, read the recipe, and extract the ingredients automatically — so you don't have to type them.</p>
+            <p><strong>Why it's useful.</strong> Closes the loop between "I saw a recipe I want to try" and "the ingredients are in the cart."</p>
+            <p class="heads-up"><strong>Heads up.</strong> Works for 100+ common food blogs (Smitten Kitchen, Serious Eats, most independent cooking sites) — they publish recipes with structured data that's easy to parse. A few won't work: <strong>NYT Cooking</strong> is paywalled, and Pinterest doesn't expose the recipe. For those, Claude will set up a "paste the recipe in as text" fallback.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my grocery agent to pull recipes directly from URLs I paste into my meal plan doc. When it sees a link (Smitten Kitchen, Serious Eats, most food blogs), it should open the page, find the ingredient list, and extract the ingredients and quantities. Then add them to the shopping list as usual. Start by checking for schema.org/Recipe structured data — most common sites have it and it's easy to parse. For sites that don't (like NYT Cooking behind a paywall, or Pinterest), tell me the limitation and set up a "paste the recipe in as text" fallback the agent can read. Step by step in plain English.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Budget check</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Before the agent sends the cart to Instacart, it estimates the total cost and warns if you're over your weekly grocery budget.</p>
+            <p><strong>Why it's useful.</strong> "This cart is $147 — you usually stay under $120. Want me to swap the salmon for chicken thighs to save $20?"</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my grocery agent to do a budget check before finalizing the list. First, ask me what my weekly grocery budget is. Then, for each item on the list, estimate the price (use Instacart prices if available, otherwise a rough estimate). Add it up. If the total is over my budget, surface the most expensive items and propose swaps. Walk me through estimating prices, comparing to budget, and proposing swaps. Plain English, step by step.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Substitution brain</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> When an item is out of stock on Instacart, the default substitution is often random. This lets your agent suggest a smarter one based on the full recipe the item is used in.</p>
+            <p><strong>Why it's useful.</strong> If a recipe calls for fennel and it's out, the agent knows the recipe already has anise and won't suggest celery (which clashes). You get thoughtful subs instead of weird ones.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my grocery agent to handle Instacart substitutions smarter. When an item is out of stock, instead of accepting the default sub, the agent should look at the full recipe the item is used in, consider what else is in that recipe, and suggest a substitution that works with those flavors. Walk me through how to detect out-of-stock items, look up the originating recipe, and propose a thoughtful substitution. Explain step by step in plain English.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Leftovers-aware</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Right now the agent assumes a fresh start each week. This has it remember what you bought last week, estimate what you likely haven't used up yet, and avoid double-buying.</p>
+            <p><strong>Why it's useful.</strong> Stops re-buying that half jar of pesto every single Friday.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my grocery agent to stop buying stuff I'm likely to still have from last week. Help me add a "leftovers" check: at the start of each run, it reads last week's order, estimates what's likely still in my fridge or pantry based on how I cook (produce goes fast, condiments last weeks), and removes anything redundant from this week's list before ordering. Walk me through how to store last week's order, estimate "likely still have," and apply that to the new list. Plain English, step by step.</div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- AGENT 5 -->
+    <section class="lesson" id="agent-5">
+      <div class="lesson-num">5</div>
+      <h2>Team status update</h2>
+      <p class="lesson-sub">Runs Thursday afternoon. You review a draft instead of writing from scratch.</p>
+
+      <div class="flow">
+        <div class="flow-step sense">
+          <div class="flow-label">Sense</div>
+          <h4>Pulls the week's work signals</h4>
+          <ul>
+            <li>Team Slack channels (last 7 days)</li>
+            <li>Project tracker tickets</li>
+            <li>Your sent email to stakeholders</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step plan">
+          <div class="flow-label">Plan</div>
+          <h4>Structures it into your update format</h4>
+          <ul>
+            <li>Shipped, in progress, blocked</li>
+            <li>Decisions made, risks to flag</li>
+            <li>Wins worth calling out</li>
+          </ul>
+        </div>
+        <div class="flow-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flow-step act">
+          <div class="flow-label">Act</div>
+          <h4>Drafts the update for your review</h4>
+          <ul>
+            <li>Google Doc or Slack draft</li>
+            <li>Tagged with what it wasn't sure about</li>
+            <li>You edit and send — it doesn't post</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tools-row">
+        <span class="tools-label">Tools</span>
+        <span class="tool-pill">Slack</span>
+        <span class="tool-pill">Linear / Jira / Asana</span>
+        <span class="tool-pill">Gmail</span>
+        <span class="tool-pill">Google Docs</span>
+        <span class="tool-pill">Claude</span>
+      </div>
+
+      <div class="setup">
+        <div class="setup-label">Tools &amp; setup</div>
+        <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions. This is the one agent where Cowork has a role — see the optional last step.</p>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">1</div>
+            <div class="setup-step-title">Authorize Slack (read)</div>
+          </div>
+          <p class="setup-step-desc">So the agent can read the last 7 days of messages in specific team channels.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through connecting my agent to Slack so it can read the last 7 days of messages in specific team channels. Tell me exactly what to click (Slack app settings, tokens, scopes), what keys I need, and how to save them safely. I'm new to this — plain English, pause for my questions.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">2</div>
+            <div class="setup-step-title">Authorize your project tracker</div>
+          </div>
+          <p class="setup-step-desc">Linear, Jira, Asana — whichever your team uses. Each is slightly different; Claude will adapt.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through connecting my agent to my project tracker so it can read tickets I worked on this week. First, ask me which tool I use (Linear, Jira, Asana, Notion, something else), then walk me through every click and every key I need for that specific tool. Plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">3</div>
+            <div class="setup-step-title">Authorize Gmail (read sent)</div>
+          </div>
+          <p class="setup-step-desc">So the agent can see emails you sent to stakeholders this week.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through giving my agent read access to my Gmail so it can look up emails I sent to stakeholders this week. Every click, every key, plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">4</div>
+            <div class="setup-step-title">Authorize Google Docs (create drafts)</div>
+          </div>
+          <p class="setup-step-desc">So the agent can leave a draft for you to edit — without posting anywhere.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Walk me through giving my agent permission to create draft Google Docs (not send or share — just create). Every click, every key, plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">5</div>
+            <div class="setup-step-title">Put it on a schedule</div>
+          </div>
+          <p class="setup-step-desc">Only after the manual version works. Runs Thursday afternoon so you have time to review before sending.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Once my status-update agent works when I run it manually, I want it to run every Thursday at 2pm. Set this up using cron on my Mac. Walk me through what gets installed, how to check it ran, and how to turn it off. Plain English.</div>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="setup-step-header">
+            <div class="setup-step-num">6</div>
+            <div class="setup-step-title">Optional: hand the draft to Cowork for polish</div>
+          </div>
+          <p class="setup-step-desc">This is the one tutorial where Cowork earns a spot — for turning a solid draft into something that looks executive-ready.</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Setup prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Once Claude Code has produced my status-update draft, I want to hand it to Cowork for final formatting before I share with my leadership team. Walk me through switching from Code mode to Cowork, opening my draft there, and what to ask Cowork to do (cleaner headings, a summary up top, brand-appropriate formatting). Plain English — I've used Cowork for docs before but not as a handoff from Claude Code.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-prompt">
+        <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
+        <div class="prompt">
+          <div class="prompt-header">
+            <span class="prompt-label">Spec prompt</span>
+            <button class="copy-btn" type="button">Copy</button>
+          </div>
+          <div class="prompt-body">I want to build an agent that runs every Thursday afternoon and pulls the last 7 days of my team's Slack channels, our project tracker tickets, and emails I've sent to stakeholders. It should draft a status update in the format: shipped, in progress, blocked, decisions made, wins worth calling out. It should deliver it as a Google Doc draft for me to edit — it should not post on its own. Can you start by writing a spec I can feed into a coding agent to build this? Be super clear and specific about how every piece of it will work.</div>
+        </div>
+      </div>
+
+      <div class="expansions">
+        <div class="expansions-header">
+          <div class="expansions-eyebrow">Expand it · afternoon hacks</div>
+          <p>Finished the base version early? Pick one of these and keep going. Each adds new data, a new feature, or a new audience. Tap to open, then paste the prompt into Claude Code — it'll walk you through the changes step by step.</p>
+        </div>
+
+        <details class="expansion">
+          <summary>Voice learning</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> The agent's first drafts probably sound generic. This has it notice which sentences you always rewrite, save your edits as examples, and start drafting in your actual voice.</p>
+            <p><strong>Why it's useful.</strong> Week 1 you edit half the draft. Week 6 you mostly approve and ship — because the agent has learned the phrases, tone, and structure you always use.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My status-update agent drafts in a generic voice and I rewrite most of it. I want it to learn from my edits. Every time I finalize an update, the agent should save both its draft and my final version, compare them, and save the rewrites it notices as examples it can use to draft in my voice next time. Walk me through saving before/after drafts, extracting patterns (word choices, tone, structure), and using them in future drafts. Explain in plain English — assume I've never done anything like this before.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Teammate one-liners</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Right now the agent infers team activity from Slack and tickets. This also DMs each teammate on Thursday morning with one short question ("anything worth calling out this week?") and folds the replies into the update.</p>
+            <p><strong>Why it's useful.</strong> You catch the stuff Slack didn't see — the quiet wins, the hidden blockers. The reply takes each teammate 30 seconds.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my status-update agent to get direct input from teammates. Every Thursday morning, before drafting the update, it should DM each teammate on Slack with a single short question (e.g., "one thing worth calling out this week?"), collect replies over a few hours, and fold them into the draft. If someone doesn't reply by the time it drafts, just skip them. Walk me through setting up the Slack DMs, collecting replies, and weaving them into the draft. Plain English, step by step.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Metrics block</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> "Shipped" without numbers feels like vibes. This pulls actual metrics from your dashboards or analytics and attaches them to the "shipped" and "in progress" sections.</p>
+            <p><strong>Why it's useful.</strong> "Shipped: onboarding v2" becomes "Shipped: onboarding v2 — completion rate up 18% week over week." Same fact, completely different story.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my status-update agent to back up the "shipped" and "in progress" sections with real metrics. Walk me through connecting it to whatever analytics I have (Mixpanel, Amplitude, Google Analytics, a Google Sheet, whatever's easiest — help me pick). For each item in the update, it should try to pull a related metric (e.g., completion rate for an onboarding flow). If it can find one, attach it. If not, skip. Explain in plain English — assume I've never connected an agent to analytics.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Risk escalation</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> A blocker listed as just another bullet often gets lost. This promotes any blocker that's been open for more than three days into a standalone call-out section with context.</p>
+            <p><strong>Why it's useful.</strong> Your manager reads the thing that's been stuck for a week instead of skimming past it.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">I want my status-update agent to handle blockers smarter. Each time it runs, it should check how old each blocker is (by tracking when each was first flagged in a small memory file). Any blocker older than 3 days should get promoted from a regular bullet into a standalone "needs attention" call-out with context about what's been tried. Walk me through tracking blocker ages, promoting old ones, and formatting the call-out. Plain English, step by step.</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="expansion">
+          <summary>Exec cut</summary>
+          <div class="expansion-body">
+            <p><strong>What it adds.</strong> Your team wants details; your exec wants three sentences. This generates two versions from the same data — the long one for the team, a tight exec summary for the leadership email.</p>
+            <p><strong>Why it's useful.</strong> You write the update once and send both versions.</p>
+            <div class="prompt">
+              <div class="prompt-header">
+                <span class="prompt-label">Expansion prompt</span>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <div class="prompt-body">My status-update agent writes one version of the update. I want it to also generate an exec cut — a 3-sentence summary (biggest win, biggest risk, one ask) for a separate leadership email. Same underlying data, different length and framing. Walk me through generating both versions from the same draft, delivering them as two separate Google Doc drafts, and making sure the exec version never includes team-internal details. Explain in plain English.</div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="takeaway">
+        <strong>Pattern to notice</strong>
+        Every one of these agents does the same three things: reads from somewhere, decides something, writes to somewhere. Once you see the pattern, you start spotting candidates in your own week.
+      </div>
+    </section>
+
   </div>
+
+  <script>
+    // ---- Copy button (event delegation) ----
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      const body = btn.closest('.prompt').querySelector('.prompt-body');
+      const text = body.innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        const range = document.createRange();
+        range.selectNode(body);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+      }
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1500);
+    });
+
+    // ---- Shift carousel ----
+    (function () {
+      const carousel = document.getElementById('shift-carousel');
+      if (!carousel) return;
+      const track = carousel.querySelector('.shift-track');
+      const slides = track.querySelectorAll('.shift-slide');
+      const prevBtn = document.getElementById('shift-prev');
+      const nextBtn = document.getElementById('shift-next');
+      const dotsContainer = document.getElementById('shift-dots');
+      let index = 0;
+
+      // Build dots
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'shift-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+      });
+      const dots = dotsContainer.querySelectorAll('.shift-dot');
+
+      function update() {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === slides.length - 1;
+      }
+      function goTo(i) {
+        index = Math.max(0, Math.min(slides.length - 1, i));
+        update();
+      }
+
+      prevBtn.addEventListener('click', () => goTo(index - 1));
+      nextBtn.addEventListener('click', () => goTo(index + 1));
+
+      carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') { goTo(index - 1); }
+        else if (e.key === 'ArrowRight') { goTo(index + 1); }
+      });
+
+      // Touch swipe
+      let touchStartX = 0;
+      let touchDeltaX = 0;
+      track.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchDeltaX = 0;
+      }, { passive: true });
+      track.addEventListener('touchmove', (e) => {
+        touchDeltaX = e.touches[0].clientX - touchStartX;
+      }, { passive: true });
+      track.addEventListener('touchend', () => {
+        if (Math.abs(touchDeltaX) > 50) {
+          goTo(touchDeltaX < 0 ? index + 1 : index - 1);
+        }
+      });
+
+      update();
+    })();
+  </script>
 </body>
 </html>
