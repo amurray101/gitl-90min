@@ -1035,6 +1035,43 @@
       background: currentColor;
       opacity: 0.35;
     }
+  
+    /* ---- Tools & setup collapsible (blue expand) ---- */
+    details.setup-expand {
+      background: var(--blue);
+      border-radius: 16px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    details.setup-expand > summary {
+      cursor: pointer;
+      padding: 16px 22px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      user-select: none;
+    }
+    details.setup-expand > summary::-webkit-details-marker { display: none; }
+    details.setup-expand > summary::after {
+      content: "+";
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    details.setup-expand[open] > summary::after { content: "\2212"; }
+    details.setup-expand > summary:hover { opacity: 0.85; }
+    details.setup-expand > .setup-body {
+      background: var(--white);
+      padding: 24px 24px 8px;
+    }
   </style>
 </head>
 <body>
@@ -1280,8 +1317,9 @@
         <span class="tool-pill">Claude</span>
       </div>
 
-      <div class="setup">
-        <div class="setup-label">Tools &amp; setup</div>
+      <details class="setup-expand">
+        <summary>Tools &amp; setup</summary>
+        <div class="setup-body">
         <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions.</p>
 
         <div class="setup-step">
@@ -1343,7 +1381,8 @@
             <div class="prompt-body">Once my school-email agent works when I run it manually, I want it to run every weekday at 7am automatically. Set this up using cron on my Mac. Walk me through what gets installed, how to check that it ran successfully, and how to turn it off if I need to. Plain English.</div>
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       <div class="agent-prompt">
         <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
@@ -1490,8 +1529,9 @@
         <span class="tool-pill">Claude</span>
       </div>
 
-      <div class="setup">
-        <div class="setup-label">Tools &amp; setup</div>
+      <details class="setup-expand">
+        <summary>Tools &amp; setup</summary>
+        <div class="setup-body">
         <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions.</p>
 
         <div class="setup-step">
@@ -1553,7 +1593,8 @@
             <div class="prompt-body">Once my meeting-prep agent works when I run it manually, I want it to run every night at 9pm so I wake up to prep docs. Set this up using cron on my Mac. Walk me through what gets installed, how to check it ran, and how to turn it off. Plain English.</div>
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       <div class="agent-prompt">
         <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
@@ -1700,8 +1741,9 @@
         <span class="tool-pill">Claude</span>
       </div>
 
-      <div class="setup">
-        <div class="setup-label">Tools &amp; setup</div>
+      <details class="setup-expand">
+        <summary>Tools &amp; setup</summary>
+        <div class="setup-body">
         <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions.</p>
 
         <div class="setup-step">
@@ -1763,7 +1805,8 @@
             <div class="prompt-body">Once my competitor-digest agent works when I run it manually, I want it to run every Monday at 7am. Set this up using cron on my Mac. Walk me through what gets installed, how to check it ran, and how to turn it off. Plain English.</div>
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       <div class="agent-prompt">
         <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
@@ -1911,8 +1954,9 @@
         <span class="tool-pill">Claude</span>
       </div>
 
-      <div class="setup">
-        <div class="setup-label">Tools &amp; setup</div>
+      <details class="setup-expand">
+        <summary>Tools &amp; setup</summary>
+        <div class="setup-body">
         <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions.</p>
 
         <div class="setup-step">
@@ -1959,7 +2003,8 @@
             <div class="prompt-body">Once my grocery agent works when I run it manually, I want it to run every Friday at 3pm so the cart is ready to review. Set this up using cron on my Mac. Walk me through what gets installed, how to check it ran, and how to turn it off. Plain English.</div>
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       <div class="agent-prompt">
         <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
@@ -2107,8 +2152,9 @@
         <span class="tool-pill">Claude</span>
       </div>
 
-      <div class="setup">
-        <div class="setup-label">Tools &amp; setup</div>
+      <details class="setup-expand">
+        <summary>Tools &amp; setup</summary>
+        <div class="setup-body">
         <p class="setup-intro">One-time auth for each tool above, then schedule it. For each step, paste the prompt into Claude Code and follow its instructions. This is the one agent where Cowork has a role — see the optional last step.</p>
 
         <div class="setup-step">
@@ -2200,7 +2246,8 @@
             <div class="prompt-body">Once Claude Code has produced my status-update draft, I want to hand it to Cowork for final formatting before I share with my leadership team. Walk me through switching from Code mode to Cowork, opening my draft there, and what to ask Cowork to do (cleaner headings, a summary up top, brand-appropriate formatting). Plain English — I've used Cowork for docs before but not as a handoff from Claude Code.</div>
           </div>
         </div>
-      </div>
+        </div>
+      </details>
 
       <div class="agent-prompt">
         <div class="agent-prompt-label">Want to build it? Paste into Claude.</div>
