@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set up Claude Code &mdash; Grrls in the Loop</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-light: #d6eef7;
+      --mint: #A8E6CE;
+      --coral: #F08080;
+      --yellow: #E8C840;
+      --black: #1a1a1a;
+      --grey: #6b6b6b;
+      --light-grey: #f7f7f5;
+      --white: #ffffff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--black);
+      background: var(--blue-light);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+    .container {
+      max-width: 720px;
+      width: 100%;
+      background: var(--white);
+      border-radius: 24px;
+      padding: 64px 56px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    }
+    .back-link {
+      display: inline-block;
+      font-size: 14px;
+      color: var(--grey);
+      text-decoration: none;
+      margin-bottom: 24px;
+    }
+    .back-link:hover { color: var(--black); }
+    .step-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .lead {
+      font-size: 18px;
+      color: var(--grey);
+      margin-bottom: 40px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-top: 36px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+    h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      color: var(--black);
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    p { margin-bottom: 12px; }
+    ul {
+      margin: 8px 0 12px 24px;
+    }
+    ul li { margin-bottom: 6px; }
+    a {
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 2px solid var(--yellow);
+    }
+    a:hover { opacity: 0.7; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px;
+      background: var(--light-grey);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    pre {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      padding: 16px 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 8px 0 8px 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      font-size: 13px;
+    }
+    .os-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin: 16px 0 4px 0;
+    }
+    .callout {
+      background: #fff7d6;
+      border-left: 4px solid var(--yellow);
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin: 12px 0;
+    }
+    .footer-note {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--light-grey);
+      font-size: 14px;
+      color: var(--grey);
+    }
+    @media (max-width: 600px) {
+      .container { padding: 40px 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; Agenda</a>
+    <span class="step-label">Before you start</span>
+    <h1>Set up Claude Code</h1>
+    <p class="lead">A one-time install. Do this before the workshop starts so you can build during the 45-minute work block.</p>
+
+    <h2><span class="num">1</span> What you'll need</h2>
+    <ul>
+      <li>A <strong>Claude Pro, Max, or Team</strong> account. The free Claude.ai plan won't work for Claude Code.</li>
+      <li>macOS 13+, Windows 10+, or a recent Linux. ~4 GB of RAM.</li>
+      <li>A terminal app you can open (Terminal on Mac, PowerShell on Windows).</li>
+    </ul>
+
+    <h2><span class="num">2</span> Install</h2>
+    <p>Open your terminal and run the one command for your operating system.</p>
+
+    <span class="os-label">macOS, Linux, or WSL</span>
+<pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+
+    <span class="os-label">Windows PowerShell</span>
+<pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
+
+    <div class="callout">If neither runs, you may be in the wrong shell. On Windows: <code>PS C:\</code> in your prompt means PowerShell; just <code>C:\</code> means CMD &mdash; switch to PowerShell.</div>
+
+    <h2><span class="num">3</span> Log in</h2>
+    <p>Open a terminal in any folder and run:</p>
+<pre><code>claude</code></pre>
+    <p>A browser tab will open. Sign in with your Anthropic account, then return to the terminal. You're now in Claude Code.</p>
+
+    <h2><span class="num">4</span> Confirm it works</h2>
+    <p>From a terminal (you can close Claude Code first with <code>/exit</code>), run:</p>
+<pre><code>claude --version</code></pre>
+    <p>You should see a version number print out. If you do, you're set for tomorrow.</p>
+
+    <div class="callout">Stuck? Run <code>claude doctor</code> for a detailed health check, or see the full docs.</div>
+
+    <p class="footer-note">Full setup docs: <a href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">code.claude.com/docs/en/setup</a></p>
+  </div>
+</body>
+</html>
