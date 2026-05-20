@@ -1129,6 +1129,147 @@ Throughout every conversation, keep a running log in today's daily note. Add ent
     </div>
     <p class="diagram-caption">Raw &rarr; routed &rarr; recallable. You stop curating; the agent curates for itself.</p>
 
+    <h2>A day in the life of the vault</h2>
+    <p style="color: var(--grey); font-size: 15px;">The hygiene lifecycle on a 24-hour clock. You work during the day; the vault metabolizes while you sleep; you wake up to a fresh agent.</p>
+    <div class="diagram" aria-label="Diagram: 24-hour hygiene lifecycle timeline">
+      <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img">
+        <defs>
+          <marker id="arrowLife" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+          </marker>
+          <linearGradient id="dayBg" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#fff4c2"/>
+            <stop offset="1" stop-color="#ffffff"/>
+          </linearGradient>
+          <linearGradient id="nightBg" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#1f2a44"/>
+            <stop offset="1" stop-color="#3a4a72"/>
+          </linearGradient>
+          <linearGradient id="dawnBg" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#ffd6a5"/>
+            <stop offset="1" stop-color="#ffffff"/>
+          </linearGradient>
+        </defs>
+
+        <!-- background bands -->
+        <rect x="20"  y="40" width="240" height="200" rx="14" fill="url(#dayBg)"/>
+        <rect x="270" y="40" width="220" height="200" rx="14" fill="url(#nightBg)"/>
+        <rect x="500" y="40" width="240" height="200" rx="14" fill="url(#dawnBg)"/>
+
+        <!-- band labels -->
+        <g>
+          <!-- sun icon, day band -->
+          <circle cx="50" cy="62" r="9" fill="#E8C840" stroke="#1a1a1a" stroke-width="1.3"/>
+          <g stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round">
+            <line x1="50" y1="46" x2="50" y2="52"/>
+            <line x1="50" y1="72" x2="50" y2="78"/>
+            <line x1="34" y1="62" x2="40" y2="62"/>
+            <line x1="60" y1="62" x2="66" y2="62"/>
+          </g>
+          <text x="70" y="66" font-family="Inter" font-size="13" font-weight="700" fill="#1a1a1a">DAY · 9 AM – 11 PM</text>
+        </g>
+        <g>
+          <!-- moon icon, night band -->
+          <path d="M286 56 a10 10 0 1 0 10 14 a8 8 0 0 1 -10 -14 z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/>
+          <text x="310" y="62" font-family="Inter" font-size="13" font-weight="700" fill="#ffffff">NIGHT · 3 AM</text>
+        </g>
+        <g>
+          <!-- sun icon, dawn band -->
+          <circle cx="530" cy="62" r="9" fill="#F08080" stroke="#1a1a1a" stroke-width="1.3"/>
+          <g stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round">
+            <line x1="530" y1="46" x2="530" y2="52"/>
+            <line x1="530" y1="72" x2="530" y2="78"/>
+            <line x1="514" y1="62" x2="520" y2="62"/>
+            <line x1="540" y1="62" x2="546" y2="62"/>
+          </g>
+          <text x="550" y="66" font-family="Inter" font-size="13" font-weight="700" fill="#1a1a1a">NEXT MORNING</text>
+        </g>
+
+        <!-- DAY band content: 3 session bubbles dropping into Daily/ -->
+        <g font-family="Inter">
+          <!-- session 1 -->
+          <rect x="40"  y="100" width="60" height="32" rx="8" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+          <text x="70" y="121" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a1a">session</text>
+          <!-- session 2 -->
+          <rect x="110" y="100" width="60" height="32" rx="8" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+          <text x="140" y="121" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a1a">session</text>
+          <!-- session 3 -->
+          <rect x="180" y="100" width="60" height="32" rx="8" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.2"/>
+          <text x="210" y="121" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a1a">session</text>
+
+          <!-- 3 arrows from sessions down to Daily -->
+          <line x1="70"  y1="135" x2="70"  y2="158" stroke="#1a1a1a" stroke-width="1.3" marker-end="url(#arrowLife)"/>
+          <line x1="140" y1="135" x2="140" y2="158" stroke="#1a1a1a" stroke-width="1.3" marker-end="url(#arrowLife)"/>
+          <line x1="210" y1="135" x2="210" y2="158" stroke="#1a1a1a" stroke-width="1.3" marker-end="url(#arrowLife)"/>
+
+          <!-- Daily/ accumulator -->
+          <rect x="40" y="165" width="200" height="56" rx="10" fill="#A8E6CE"/>
+          <text x="140" y="186" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" font-weight="700" fill="#1a1a1a">Memory/Daily/2026-XX-XX.md</text>
+          <text x="140" y="204" text-anchor="middle" font-size="10" fill="#1a1a1a">Stop hook appends after each session</text>
+          <text x="140" y="217" text-anchor="middle" font-size="9" font-style="italic" fill="#6b6b6b">raw, unfiltered, dated</text>
+        </g>
+
+        <!-- arrow from DAY band to NIGHT band -->
+        <line x1="245" y1="193" x2="285" y2="193" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#arrowLife)"/>
+
+        <!-- NIGHT band content: /rem-cycle box doing extraction -->
+        <g font-family="Inter">
+          <!-- the cycle process -->
+          <rect x="285" y="100" width="190" height="44" rx="10" fill="#E8C840"/>
+          <text x="380" y="120" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="13" font-weight="700" fill="#1a1a1a">/rem-cycle</text>
+          <text x="380" y="135" text-anchor="middle" font-size="10" fill="#1a1a1a">fires at 3 AM (launchd / cron)</text>
+
+          <!-- what it does -->
+          <text x="380" y="162" text-anchor="middle" font-size="10.5" font-weight="600" fill="#ffffff">while you sleep, it:</text>
+
+          <g font-size="10" fill="#ffffff">
+            <text x="297" y="180">·  reads Memory/Daily/ entries</text>
+            <text x="297" y="194">·  routes signal to People/, Lessons/, Preferences/</text>
+            <text x="297" y="208">·  refreshes Hippocampus.md &ldquo;Now&rdquo;</text>
+            <text x="297" y="222">·  every ~48h: refreshes &ldquo;Arc&rdquo;</text>
+          </g>
+        </g>
+
+        <!-- arrow from NIGHT band to NEXT MORNING band -->
+        <line x1="475" y1="193" x2="515" y2="193" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#arrowLife)"/>
+
+        <!-- NEXT MORNING band content -->
+        <g font-family="Inter">
+          <rect x="515" y="100" width="210" height="44" rx="10" fill="#F08080"/>
+          <text x="620" y="120" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="13" font-weight="700" fill="#1a1a1a">claude .</text>
+          <text x="620" y="135" text-anchor="middle" font-size="10" fill="#1a1a1a">you open a new session</text>
+
+          <!-- the agent reads fresh state -->
+          <rect x="515" y="156" width="210" height="68" rx="10" fill="#ffffff" stroke="#F08080" stroke-width="1.5"/>
+          <text x="620" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">Hippocampus.md is fresh</text>
+          <text x="620" y="191" text-anchor="middle" font-size="10" fill="#6b6b6b">&ldquo;Now&rdquo; reflects last night&rsquo;s extraction</text>
+          <text x="620" y="206" text-anchor="middle" font-size="10" fill="#6b6b6b">People/ has new threads</text>
+          <text x="620" y="220" text-anchor="middle" font-size="10" fill="#6b6b6b">Lessons/ has new rules</text>
+        </g>
+
+        <!-- bottom timeline / hour ticks -->
+        <line x1="40" y1="270" x2="720" y2="270" stroke="#1a1a1a" stroke-width="1.4"/>
+        <g font-family="Inter" font-size="10" fill="#6b6b6b" text-anchor="middle">
+          <g><line x1="60"  y1="266" x2="60"  y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="60"  y="290">9am</text></g>
+          <g><line x1="140" y1="266" x2="140" y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="140" y="290">2pm</text></g>
+          <g><line x1="220" y1="266" x2="220" y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="220" y="290">8pm</text></g>
+          <g><line x1="300" y1="266" x2="300" y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="300" y="290">11pm</text></g>
+          <g><line x1="380" y1="266" x2="380" y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="380" y="290" font-weight="700" fill="#1a1a1a">3am</text></g>
+          <g><line x1="460" y1="266" x2="460" y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="460" y="290">5am</text></g>
+          <g><line x1="540" y1="266" x2="540" y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="540" y="290">7am</text></g>
+          <g><line x1="620" y1="266" x2="620" y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="620" y="290" font-weight="700" fill="#1a1a1a">9am</text></g>
+          <g><line x1="700" y1="266" x2="700" y2="276" stroke="#1a1a1a" stroke-width="1.4"/><text x="700" y="290">noon</text></g>
+        </g>
+
+        <!-- bottom legend -->
+        <g font-family="Inter" font-size="11" fill="#1a1a1a">
+          <text x="380" y="320" text-anchor="middle" font-weight="700">The loop closes itself.</text>
+          <text x="380" y="338" text-anchor="middle" font-size="10.5" fill="#6b6b6b" font-style="italic">You write &rarr; you sleep &rarr; the agent processes &rarr; you wake up smarter together.</text>
+        </g>
+      </svg>
+    </div>
+    <p class="diagram-caption">Daytime: raw capture. Overnight: extraction + Hippocampus refresh. Morning: a fresh, current agent.</p>
+
     <h2>The hygiene loop</h2>
     <p style="color: var(--grey); font-size: 15px;">Three loops keep the system from rotting. You don&rsquo;t maintain it &mdash; you correct it when it&rsquo;s wrong.</p>
     <div class="diagram" aria-label="Diagram: three nested loops">

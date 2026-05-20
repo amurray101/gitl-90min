@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalize your agent &mdash; Grrls in the Loop</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    :root {
+      --blue-light: #d6eef7;
+      --blue-deep: #7ec2db;
+      --mint: #A8E6CE;
+      --mint-deep: #6ed0ad;
+      --coral: #F08080;
+      --yellow: #E8C840;
+      --black: #1a1a1a;
+      --grey: #6b6b6b;
+      --grey-soft: #a3a3a3;
+      --light-grey: #f7f7f5;
+      --white: #ffffff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--black);
+      background: var(--blue-light);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      padding: 48px 24px;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 24px;
+      padding: 56px 56px 72px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    }
+    .back-link {
+      display: inline-block;
+      font-size: 14px;
+      color: var(--grey);
+      text-decoration: none;
+      margin-bottom: 24px;
+      border-bottom: none;
+    }
+    .back-link:hover { color: var(--black); }
+    .step-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .lead {
+      font-size: 17px;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-top: 48px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2 .num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--black);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .section-hint {
+      color: var(--grey);
+      font-size: 14px;
+      margin-bottom: 20px;
+      margin-left: 42px;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      font-size: 0.9em;
+      background: var(--light-grey);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* form */
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+    }
+    .field .hint {
+      font-size: 12px;
+      color: var(--grey-soft);
+      font-weight: 400;
+    }
+    input[type="text"], select, textarea {
+      font-family: inherit;
+      font-size: 15px;
+      padding: 10px 14px;
+      border: 1.5px solid #e5e5e2;
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--black);
+      width: 100%;
+      transition: border-color 0.15s ease;
+    }
+    input[type="text"]:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--blue-deep);
+    }
+    textarea { resize: vertical; min-height: 110px; font-family: inherit; line-height: 1.55; }
+
+    /* sliders */
+    .slider-q {
+      background: var(--light-grey);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+    }
+    .slider-q .q-label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .slider-q .q-value {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--black);
+      background: var(--white);
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+    .slider-row {
+      display: grid;
+      grid-template-columns: minmax(80px, auto) 1fr minmax(80px, auto);
+      gap: 12px;
+      align-items: center;
+      font-size: 12.5px;
+      color: var(--grey);
+    }
+    .slider-row .anchor.left { text-align: right; }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(to right, var(--coral), var(--yellow), var(--mint-deep));
+      border-radius: 999px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2.5px solid var(--black);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2.5px solid var(--black);
+      cursor: pointer;
+    }
+
+    /* chip checkboxes */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .chip-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .chip-label {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--light-grey);
+      border: 1.5px solid transparent;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--black);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .chip-label:hover { background: #ebebe7; }
+    .chip-input:checked + .chip-label {
+      background: var(--mint);
+      border-color: var(--mint-deep);
+      font-weight: 600;
+    }
+    .chip-input:focus + .chip-label {
+      outline: 2px solid var(--blue-deep);
+      outline-offset: 2px;
+    }
+
+    /* generate row */
+    .generate-row {
+      margin-top: 48px;
+      padding: 24px;
+      background: var(--mint);
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .generate-row .copy {
+      font-size: 14px;
+      color: var(--black);
+    }
+    .generate-row .copy strong { font-weight: 700; }
+    .btn {
+      background: var(--black);
+      color: var(--white);
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn:disabled { opacity: 0.5; cursor: default; }
+
+    /* preview */
+    .preview {
+      margin-top: 32px;
+      background: var(--light-grey);
+      border-radius: 12px;
+      padding: 18px 22px;
+      display: none;
+    }
+    .preview.visible { display: block; }
+    .preview .preview-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+    .preview pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: var(--black);
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 380px;
+      overflow-y: auto;
+    }
+
+    /* what-next callout */
+    .callout {
+      background: #fff8d8;
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-top: 24px;
+      font-size: 14.5px;
+    }
+    .callout strong { font-weight: 700; }
+    .callout code {
+      background: rgba(0,0,0,0.06);
+    }
+
+    a { color: var(--black); border-bottom: 2px solid var(--yellow); text-decoration: none; }
+    a:hover { opacity: 0.7; }
+
+    @media (max-width: 600px) {
+      .container { padding: 40px 24px; }
+      .row { grid-template-columns: 1fr; }
+      .slider-row { grid-template-columns: 1fr; gap: 6px; }
+      .slider-row .anchor.left { text-align: left; }
+      .generate-row { flex-direction: column; align-items: stretch; text-align: left; }
+      .generate-row .btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="context-and-hygiene.html" class="back-link">&larr; Context &amp; hygiene</a>
+    <span class="step-label">Personalize &middot; ~5 min</span>
+    <h1>Personalize your agent</h1>
+    <p class="lead">Answer the questions below to generate <code>seed.zip</code> &mdash; drop it into the <code>_seed/</code> folder of the template, then run <code>/hatch</code> and your agent comes to life with your name, your voice, your domains.</p>
+
+    <form id="seed-form">
+
+      <!-- 1. Basics -->
+      <h2><span class="num">1</span> About you</h2>
+      <p class="section-hint">Names, pronouns, where the vault lives on disk.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="first_name">First name <span class="hint">required</span></label>
+          <input type="text" id="first_name" name="first_name" required placeholder="Jane">
+        </div>
+        <div class="field">
+          <label for="last_name">Last name</label>
+          <input type="text" id="last_name" name="last_name" placeholder="Doe">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="agent_name">Name your agent <span class="hint">short, easy to say</span></label>
+          <input type="text" id="agent_name" name="agent_name" required placeholder="lucy">
+        </div>
+        <div class="field">
+          <label for="agent_pronouns">Your agent's pronouns</label>
+          <select id="agent_pronouns" name="agent_pronouns">
+            <option value="they/them">they/them</option>
+            <option value="she/her">she/her</option>
+            <option value="he/him">he/him</option>
+            <option value="it/its">it/its</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="vault_dir">Vault folder <span class="hint">where on your machine</span></label>
+          <input type="text" id="vault_dir" name="vault_dir" value="~/Documents/my-agent">
+        </div>
+        <div class="field">
+          <label for="os">Operating system</label>
+          <select id="os" name="os">
+            <option value="macos-arm64">macOS (Apple Silicon)</option>
+            <option value="macos-intel">macOS (Intel)</option>
+            <option value="linux">Linux</option>
+            <option value="windows">Windows</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 2. Voice -->
+      <h2><span class="num">2</span> Voice</h2>
+      <p class="section-hint">How does the agent talk to you? Slide to where it feels right.</p>
+
+      <div class="slider-q" data-slider data-axis="voice.register"
+           data-left="Formal" data-right="Casual / playful">
+        <div class="q-label">How casual? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Formal</span>
+          <input type="range" min="0" max="100" value="50">
+          <span class="anchor right">Casual / playful</span>
+        </div>
+      </div>
+
+      <div class="slider-q" data-slider data-axis="voice.emoji"
+           data-left="No emoji" data-right="Open emoji">
+        <div class="q-label">Emoji use? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">No emoji</span>
+          <input type="range" min="0" max="100" value="35">
+          <span class="anchor right">Open emoji</span>
+        </div>
+      </div>
+
+      <div class="slider-q" data-slider data-axis="voice.honorifics"
+           data-left="Skip honorifics" data-right="Use honorifics">
+        <div class="q-label">&ldquo;Sir / ma'am / per your request&rdquo;? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Skip honorifics</span>
+          <input type="range" min="0" max="100" value="10">
+          <span class="anchor right">Use honorifics</span>
+        </div>
+      </div>
+
+      <div class="slider-q" data-slider data-axis="voice.default_length"
+           data-left="Short replies" data-right="Long replies">
+        <div class="q-label">Default reply length? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Short replies</span>
+          <input type="range" min="0" max="100" value="50">
+          <span class="anchor right">Long replies</span>
+        </div>
+      </div>
+
+      <!-- 3. Mind -->
+      <h2><span class="num">3</span> Mind</h2>
+      <p class="section-hint">How does it reason? When does it push back, devil-advocate, premortem?</p>
+
+      <div class="slider-q" data-slider data-axis="mind.pushback"
+           data-left="No pushback" data-right="Assertive pushback">
+        <div class="q-label">When you're wrong, how loud does it get? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">No pushback</span>
+          <input type="range" min="0" max="100" value="65">
+          <span class="anchor right">Assertive pushback</span>
+        </div>
+      </div>
+
+      <div class="slider-q" data-slider data-axis="mind.devil_advocate"
+           data-left="Never devil's advocate" data-right="Always devil's advocate">
+        <div class="q-label">Devil's advocate on big decisions? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Never</span>
+          <input type="range" min="0" max="100" value="50">
+          <span class="anchor right">Always</span>
+        </div>
+      </div>
+
+      <div class="slider-q" data-slider data-axis="mind.premortem"
+           data-left="Never premortems" data-right="Always premortems">
+        <div class="q-label">Run premortems before big moves? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Never</span>
+          <input type="range" min="0" max="100" value="50">
+          <span class="anchor right">Always</span>
+        </div>
+      </div>
+
+      <!-- 4. Bond -->
+      <h2><span class="num">4</span> Bond</h2>
+      <p class="section-hint">What kind of relationship do you want?</p>
+
+      <div class="slider-q" data-slider data-axis="bond.role"
+           data-left="Servant / EA" data-right="Partner / co-founder">
+        <div class="q-label">Role? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Servant / EA</span>
+          <input type="range" min="0" max="100" value="55">
+          <span class="anchor right">Partner / co-founder</span>
+        </div>
+      </div>
+
+      <div class="slider-q" data-slider data-axis="bond.agreement"
+           data-left="Sycophantic" data-right="Contrarian">
+        <div class="q-label">Agreement default? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Sycophantic</span>
+          <input type="range" min="0" max="100" value="65">
+          <span class="anchor right">Contrarian</span>
+        </div>
+      </div>
+
+      <div class="slider-q" data-slider data-axis="bond.initiative"
+           data-left="Stays out of my way" data-right="Proactive">
+        <div class="q-label">Initiative? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Stays out of my way</span>
+          <input type="range" min="0" max="100" value="60">
+          <span class="anchor right">Proactive</span>
+        </div>
+      </div>
+
+      <div class="slider-q" data-slider data-axis="bond.truth"
+           data-left="Spares my feelings" data-right="Tells uncomfortable truths">
+        <div class="q-label">Truth-telling? <span class="q-value">balanced (50)</span></div>
+        <div class="slider-row">
+          <span class="anchor left">Spares feelings</span>
+          <input type="range" min="0" max="100" value="70">
+          <span class="anchor right">Tells uncomfortable truths</span>
+        </div>
+      </div>
+
+      <!-- 5. Domains -->
+      <h2><span class="num">5</span> Life domains</h2>
+      <p class="section-hint">Which parts of your life should your agent know about? Top-level folders get scaffolded for each.</p>
+      <div class="chips" id="domain-chips">
+        <input type="checkbox" id="d-work" class="chip-input" value="work" checked>
+        <label for="d-work" class="chip-label">Work</label>
+        <input type="checkbox" id="d-personal" class="chip-input" value="personal" checked>
+        <label for="d-personal" class="chip-label">Personal</label>
+        <input type="checkbox" id="d-family" class="chip-input" value="family">
+        <label for="d-family" class="chip-label">Family</label>
+        <input type="checkbox" id="d-school" class="chip-input" value="school">
+        <label for="d-school" class="chip-label">School</label>
+        <input type="checkbox" id="d-hobby" class="chip-input" value="hobby">
+        <label for="d-hobby" class="chip-label">Hobbies</label>
+        <input type="checkbox" id="d-social" class="chip-input" value="events-social-circle">
+        <label for="d-social" class="chip-label">Events &amp; social</label>
+        <input type="checkbox" id="d-health" class="chip-input" value="health">
+        <label for="d-health" class="chip-label">Health</label>
+        <input type="checkbox" id="d-finances" class="chip-input" value="finances">
+        <label for="d-finances" class="chip-label">Finances</label>
+        <input type="checkbox" id="d-ai-workflows" class="chip-input" value="ai-workflows">
+        <label for="d-ai-workflows" class="chip-label">AI workflows</label>
+        <input type="checkbox" id="d-ai-teaching" class="chip-input" value="ai-teaching">
+        <label for="d-ai-teaching" class="chip-label">AI teaching</label>
+      </div>
+
+      <!-- 6. Connectors -->
+      <h2><span class="num">6</span> Data connectors</h2>
+      <p class="section-hint">What should your agent be able to read? You can wire these up later &mdash; this just records what you want.</p>
+      <div class="chips" id="connector-chips">
+        <input type="checkbox" id="c-gmail" class="chip-input" value="gmail" checked>
+        <label for="c-gmail" class="chip-label">Gmail</label>
+        <input type="checkbox" id="c-calendar" class="chip-input" value="calendar" checked>
+        <label for="c-calendar" class="chip-label">Calendar</label>
+        <input type="checkbox" id="c-granola" class="chip-input" value="granola">
+        <label for="c-granola" class="chip-label">Granola (meetings)</label>
+        <input type="checkbox" id="c-canvas" class="chip-input" value="canvas">
+        <label for="c-canvas" class="chip-label">Canvas (school)</label>
+        <input type="checkbox" id="c-imessage" class="chip-input" value="imessage">
+        <label for="c-imessage" class="chip-label">iMessage</label>
+        <input type="checkbox" id="c-whatsapp" class="chip-input" value="whatsapp">
+        <label for="c-whatsapp" class="chip-label">WhatsApp</label>
+      </div>
+
+      <!-- 7. Essay -->
+      <h2><span class="num">7</span> Voice sample <span style="font-size:13px;color:var(--grey-soft);font-weight:500;">(optional)</span></h2>
+      <p class="section-hint">Paste a paragraph you wrote &mdash; an essay, a journal entry, a real email. Your agent reads it to pick up your cadence and rhythm.</p>
+      <textarea id="essay" name="essay" placeholder="A paragraph or two of your own writing. The more honest, the better — your agent matches the voice it sees."></textarea>
+
+      <!-- Generate -->
+      <div class="generate-row">
+        <div class="copy">
+          <strong>Ready?</strong> Click to generate <code>seed.zip</code>. You can keep editing and re-generating.
+        </div>
+        <button type="button" id="generate-btn" class="btn">Generate seed.zip &darr;</button>
+      </div>
+
+      <div class="preview" id="preview">
+        <div class="preview-label">Preview &middot; seed/answers.yaml</div>
+        <pre id="preview-yaml"></pre>
+      </div>
+
+      <div class="callout">
+        <strong>Next:</strong> unzip <code>seed.zip</code> into the <code>_seed/</code> folder at the root of your <code>agent-context-template</code>. Then open Claude Code with <code>claude .</code> and run <code>/hatch</code> &mdash; it reads <code>_seed/answers.yaml</code>, personalizes every template in the vault, and brings your agent online. Continue to <a href="build-an-agent.html">Step 5 &mdash; Build your agent</a>.
+      </div>
+
+    </form>
+  </div>
+
+<script>
+  // --- slider labels ---
+  function labelFor(value, leftAnchor, rightAnchor) {
+    var v = Number(value);
+    if (v === 0)   return "firmly " + leftAnchor.toLowerCase();
+    if (v <= 15)   return "strongly " + leftAnchor.toLowerCase();
+    if (v <= 39)   return "lean " + leftAnchor.toLowerCase();
+    if (v <= 49)   return "balanced, slight " + leftAnchor.toLowerCase();
+    if (v === 50)  return "balanced";
+    if (v <= 60)   return "balanced, slight " + rightAnchor.toLowerCase();
+    if (v <= 84)   return "lean " + rightAnchor.toLowerCase();
+    if (v <= 99)   return "strongly " + rightAnchor.toLowerCase();
+    return "firmly " + rightAnchor.toLowerCase();
+  }
+
+  function refreshSlider(group) {
+    var input = group.querySelector('input[type="range"]');
+    var valEl = group.querySelector('.q-value');
+    var left  = group.dataset.left;
+    var right = group.dataset.right;
+    var v = Number(input.value);
+    valEl.textContent = labelFor(v, left, right) + " (" + v + ")";
+  }
+
+  document.querySelectorAll('[data-slider]').forEach(function (group) {
+    var input = group.querySelector('input[type="range"]');
+    input.addEventListener('input', function () { refreshSlider(group); });
+    refreshSlider(group);
+  });
+
+  // --- gather answers ---
+  function gather() {
+    var data = {};
+    data.first_name    = (document.getElementById('first_name').value || '').trim();
+    data.last_name     = (document.getElementById('last_name').value || '').trim();
+    data.agent_name    = ((document.getElementById('agent_name').value || '').trim() || 'agent').toLowerCase();
+    data.agent_pronouns = document.getElementById('agent_pronouns').value;
+    data.vault_dir     = (document.getElementById('vault_dir').value || '').trim() || ('~/Documents/' + data.agent_name);
+    data.os            = document.getElementById('os').value;
+    data.essay         = document.getElementById('essay').value;
+
+    var sliders = {};
+    document.querySelectorAll('[data-slider]').forEach(function (group) {
+      var axis  = group.dataset.axis;
+      var left  = group.dataset.left;
+      var right = group.dataset.right;
+      var v     = Number(group.querySelector('input[type="range"]').value);
+      sliders[axis] = { value: v, label: labelFor(v, left, right), left: left, right: right };
+    });
+    data.sliders = sliders;
+
+    data.domains = Array.from(document.querySelectorAll('#domain-chips .chip-input:checked')).map(function (c) { return c.value; });
+    data.connectors = Array.from(document.querySelectorAll('#connector-chips .chip-input:checked')).map(function (c) { return c.value; });
+
+    return data;
+  }
+
+  // --- yaml builder ---
+  function yamlEscape(s) {
+    if (s == null) return '""';
+    s = String(s);
+    if (s === '') return '""';
+    if (/[:#&*!|>'"%@`\n]/.test(s) || /^[\s-]/.test(s) || /\s$/.test(s)) {
+      return '"' + s.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+    }
+    return s;
+  }
+
+  function buildAnswersYaml(d) {
+    var nowIso = new Date().toISOString();
+    var dateOnly = nowIso.slice(0, 10);
+    var fullName = (d.first_name + (d.last_name ? ' ' + d.last_name : '')).trim() || 'Friend';
+    var sl = d.sliders;
+
+    var lines = [];
+    lines.push('# generated by Grrls in the Loop onboarding · ' + nowIso);
+    lines.push('# personalized seed for ' + (d.agent_name || 'agent'));
+    lines.push('');
+    lines.push('name: ' + yamlEscape(fullName));
+    lines.push('first_name: ' + yamlEscape(d.first_name || 'Friend'));
+    lines.push('last_name: ' + yamlEscape(d.last_name || ''));
+    lines.push('agent_name: ' + yamlEscape(d.agent_name));
+    lines.push('agent_name_lower: ' + yamlEscape(d.agent_name.toLowerCase()));
+    lines.push('agent_pronouns: ' + yamlEscape(d.agent_pronouns));
+    lines.push('vault_dir: ' + yamlEscape(d.vault_dir));
+    lines.push('os: ' + yamlEscape(d.os));
+    lines.push('hatch_date: ' + dateOnly);
+    lines.push('');
+
+    function block(name, axes) {
+      lines.push('# ' + name + ' — slider answers (0-100 numeric + derived label).');
+      lines.push(name + ':');
+      axes.forEach(function (a) {
+        var s = sl[name + '.' + a.key];
+        lines.push('  ' + a.key + ': ' + s.value + '  # 0 = ' + a.leftAnchor + ' · 100 = ' + a.rightAnchor);
+        lines.push('  ' + a.key + '_label: ' + yamlEscape(s.label));
+      });
+      if (name === 'voice') lines.push('  personality_freeform: ""');
+      if (name === 'mind')  lines.push('  freeform: ""');
+      lines.push('');
+    }
+
+    block('voice', [
+      { key: 'register',       leftAnchor: 'Formal',           rightAnchor: 'Casual / playful' },
+      { key: 'emoji',          leftAnchor: 'No emoji',         rightAnchor: 'Open emoji' },
+      { key: 'honorifics',     leftAnchor: 'Skip honorifics',  rightAnchor: 'Use honorifics' },
+      { key: 'default_length', leftAnchor: 'Short replies',    rightAnchor: 'Long replies' }
+    ]);
+    block('mind', [
+      { key: 'pushback',       leftAnchor: 'No pushback',           rightAnchor: 'Assertive pushback' },
+      { key: 'devil_advocate', leftAnchor: "Never devil's advocate", rightAnchor: "Always devil's advocate" },
+      { key: 'premortem',      leftAnchor: 'Never premortems',      rightAnchor: 'Always premortems' }
+    ]);
+    block('bond', [
+      { key: 'role',       leftAnchor: 'Servant / EA',        rightAnchor: 'Partner / co-founder' },
+      { key: 'agreement',  leftAnchor: 'Sycophantic',         rightAnchor: 'Contrarian' },
+      { key: 'initiative', leftAnchor: 'Stays out of my way', rightAnchor: 'Proactive' },
+      { key: 'truth',      leftAnchor: 'Spares my feelings',  rightAnchor: 'Tells uncomfortable truths' }
+    ]);
+
+    lines.push('focus_projects: ""');
+    lines.push('');
+    lines.push('domains:');
+    if (d.domains.length === 0) {
+      lines.push('  []');
+    } else {
+      d.domains.forEach(function (dom) { lines.push('  - ' + dom); });
+    }
+    lines.push('');
+    lines.push('# People — flat list. /hatch creates Memory/People/<slug>.md per entry.');
+    lines.push('# Add later as you work in the vault. Empty on day zero.');
+    lines.push('people:');
+    lines.push('  []');
+    lines.push('');
+    lines.push('connectors:');
+    ['gmail', 'canvas', 'granola', 'calendar', 'imessage', 'whatsapp'].forEach(function (c) {
+      lines.push('  ' + c + ': ' + (d.connectors.indexOf(c) >= 0));
+    });
+    lines.push('');
+    lines.push('lookback:');
+    lines.push('  window_days: 90');
+    lines.push('  max_emails: 20000');
+    lines.push('');
+    lines.push('preseed_loaded_at: ' + nowIso);
+
+    return lines.join('\n') + '\n';
+  }
+
+  function buildConnectorsPlan(d) {
+    var fullName = (d.first_name + (d.last_name ? ' ' + d.last_name : '')).trim() || 'Friend';
+    var first = d.first_name || 'Friend';
+    var enabled = d.connectors;
+    var has = function (k) { return enabled.indexOf(k) >= 0; };
+
+    var sections = [];
+    sections.push('# Connectors plan for ' + d.agent_name + ' · ' + new Date().toISOString().slice(0,10));
+    sections.push('');
+    sections.push('> Generated by the Grrls in the Loop onboarding form for ' + fullName + '. Read by the connect-all skill to drive the connector chain (`/connect-all` in Claude Code; `Skills/connect-all/SKILL.md` in Codex).');
+    sections.push('');
+    sections.push('## Plan');
+    sections.push('');
+    sections.push('Execute each enabled connector in order. For each: run setup, validate, write `Memory/Connectors/<name>.md`, move on. After all enabled connectors are live, fire `/lookback`.');
+    sections.push('');
+    sections.push('## Step 0 — Composio MCP bootstrap (do this BEFORE any per-connector setup)');
+    sections.push('');
+    sections.push('Most connectors below route through Composio. If the Composio MCP is not yet loaded in this terminal harness session (no `mcp__composio__*` tools are available), wire it up first:');
+    sections.push('');
+    sections.push('1. Ask ' + first + ': "Do you already have a Composio account + API key?"');
+    sections.push('   - If NO: walk them through it. They open https://platform.composio.dev, sign up, then Settings → API Keys → create one. **Do NOT proceed with a fake or guessed key.**');
+    sections.push('   - If YES: ask them to paste the key. Treat it like a password — never echo it, never write it to the vault, never paste it in any log or commit.');
+    sections.push('');
+    sections.push('2. Install the Composio MCP server using ' + first + '\'s API key. Detect the current harness first. For Claude Code, use `claude mcp add`; for Codex, use the Codex-compatible MCP add command. Prefer env-var storage for the API key.');
+    sections.push('');
+    sections.push('3. Restart the harness if Composio\'s docs require it.');
+    sections.push('');
+    sections.push('4. Verify the Composio MCP is loaded by listing tools.');
+    sections.push('');
+    sections.push('5. Write `~/<vaultDir>/Memory/Connectors/composio.md` with: install method, dashboard URL, API-key reminder, timestamp.');
+    sections.push('');
+    sections.push('Only once Composio MCP is verified do you proceed to per-connector setup.');
+    sections.push('');
+    sections.push('## Connector list');
+    sections.push('');
+
+    var blocks = {
+      gmail: '### gmail\n\n- **enabled:** `' + has('gmail') + '`\n- **why:** Mine email volume + threads to enrich Memory/People/* with frequency stats, last-contact dates, and voice samples.\n- **setup:** Connect Gmail through Composio with a stable alias (school/personal/work).\n- **target paths in vault:** Memory/People/* (enriched), Memory/Connectors/gmail.md',
+      canvas: '### canvas\n\n- **enabled:** `' + has('canvas') + '`\n- **why:** Sync active courses → Academics/<course-slug>/ scaffolding.\n- **setup:** Generate a Personal Access Token in Canvas Account Settings, paste into your terminal harness, persisted to `agent/secrets/canvas.token`.\n- **target paths in vault:** Academics/<course-slug>/, Memory/Connectors/canvas.md',
+      granola: '### granola\n\n- **enabled:** `' + has('granola') + '`\n- **why:** Read meeting transcripts through Composio Granola.\n- **setup:** Connect Granola through Composio, then verify with a tiny meeting-list probe.\n- **target paths in vault:** Memory/Meetings/, Memory/Connectors/granola.md',
+      calendar: '### calendar\n\n- **enabled:** `' + has('calendar') + '`\n- **why:** Pull events to seed Memory/Meetings/ and surface recurring patterns.\n- **setup:** Connect Google Calendar through Composio, usually with the same alias as Gmail.\n- **target paths in vault:** Memory/Meetings/, Memory/Connectors/calendar.md',
+      imessage: '### imessage\n\n- **enabled:** `' + has('imessage') + '`\n- **why:** Triage iMessage state + enrich People graph (high-friction, deferred).\n- **setup:** Grant Full Disk Access to Terminal or your harness app. Deferred for v1.\n- **target paths in vault:** Memory/People/*, Memory/Connectors/imessage.md',
+      whatsapp: '### whatsapp\n\n- **enabled:** `' + has('whatsapp') + '`\n- **why:** WhatsApp state triage (high-friction, deferred).\n- **setup:** Set up local WhatsApp MCP. Deferred for v1.\n- **target paths in vault:** Memory/People/*, Memory/Connectors/whatsapp.md'
+    };
+    Object.keys(blocks).forEach(function (k) {
+      sections.push(blocks[k]);
+      sections.push('');
+    });
+
+    sections.push('## Lookback parameters');
+    sections.push('');
+    sections.push('- **window:** 90 days (canonical for v1)');
+    sections.push('- **target enrichment:** `Memory/People/*` frequency stats + voice samples + last-interaction dates; new-people candidates → `Memory/Lessons/lookback-candidates.md`; theme inference → `agent/Soul.md` voice exemplars.');
+    sections.push('');
+    sections.push('## Domain context');
+    sections.push('');
+    sections.push(first + ' selected these life domains during onboarding: **' + (d.domains.join(', ') || '(none)') + '**.');
+    sections.push('');
+    sections.push('`/hatch` scaffolds top-level folders for each selected domain.');
+    sections.push('');
+    sections.push('If `school` and `canvas: true` are both set, `/canvas-sync` runs during the connector chain to populate `Academics/<course-slug>/` per active Canvas course.');
+    sections.push('');
+    sections.push('---');
+    sections.push('');
+    sections.push('_This file is read by the connect-all skill. If edited manually, the agent respects your changes on next run._');
+    sections.push('');
+
+    return sections.join('\n');
+  }
+
+  function buildEssay(d) {
+    var fullName = (d.first_name + (d.last_name ? ' ' + d.last_name : '')).trim() || 'this user';
+    var body = (d.essay || '').trim();
+    if (!body) {
+      return '# Essay\n\n_(No essay uploaded for ' + fullName + '.)_\n';
+    }
+    return '# Essay\n\n> Voice sample provided by ' + fullName + ' during onboarding. Read by `/hatch` to calibrate voice exemplars in `agent/Soul.md`.\n\n' + body + '\n';
+  }
+
+  // --- generate + download ---
+  document.getElementById('generate-btn').addEventListener('click', function () {
+    if (!document.getElementById('first_name').value.trim() || !document.getElementById('agent_name').value.trim()) {
+      alert('Please fill in your first name and your agent\'s name.');
+      return;
+    }
+    var d = gather();
+    var yaml = buildAnswersYaml(d);
+    var connectors = buildConnectorsPlan(d);
+    var essay = buildEssay(d);
+
+    var preview = document.getElementById('preview');
+    document.getElementById('preview-yaml').textContent = yaml;
+    preview.classList.add('visible');
+
+    var zip = new JSZip();
+    var folder = zip.folder('seed');
+    folder.file('answers.yaml', yaml);
+    folder.file('connectors-plan.md', connectors);
+    folder.file('essay.md', essay);
+    folder.file('README.md',
+      '# Seed bundle for ' + (d.agent_name || 'your agent') + '\n\n' +
+      'Drop this entire `seed/` folder into the `_seed/` directory at the root of your `agent-context-template`. Then in that directory run `claude .` and ask the agent to run `/hatch` — it will read `answers.yaml`, personalize every template in the vault, and bring your agent online.\n\n' +
+      '## Files\n\n' +
+      '- `answers.yaml` — your voice/mind/bond sliders, domains, connectors\n' +
+      '- `connectors-plan.md` — which data sources to wire up, read by `/connect-all`\n' +
+      '- `essay.md` — voice sample (optional)\n'
+    );
+
+    zip.generateAsync({ type: 'blob' }).then(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'seed.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    });
+  });
+</script>
+</body>
+</html>
