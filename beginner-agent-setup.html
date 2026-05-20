@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setup Your Agent's Context &mdash; Grrls in the Loop</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue-light: #d6eef7;
+      --blue: #A8D8EA;
+      --blue-deep: #7ec2db;
+      --mint: #A8E6CE;
+      --mint-light: #e6f7ee;
+      --mint-deep: #6ed0ad;
+      --coral: #F08080;
+      --yellow: #E8C840;
+      --yellow-light: #fff6cc;
+      --black: #1a1a1a;
+      --grey: #6b6b6b;
+      --grey-soft: #a3a3a3;
+      --light-grey: #f7f7f5;
+      --white: #ffffff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--black);
+      background: var(--blue-light);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      padding: 48px 24px;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 24px;
+      padding: 56px 56px 72px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    }
+    .back-link {
+      display: inline-block;
+      font-size: 14px;
+      color: var(--grey);
+      text-decoration: none;
+      margin-bottom: 24px;
+      border-bottom: none;
+    }
+    .back-link:hover { color: var(--black); }
+    .step-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 12px;
+      background: var(--mint);
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-top: 56px;
+      margin-bottom: 12px;
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      margin: 0 0 6px 0;
+    }
+    .lead {
+      font-size: 18px;
+      color: var(--grey);
+      margin-bottom: 8px;
+    }
+    p { margin-bottom: 14px; }
+
+    /* ---- Steps ---- */
+    .step { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--light-grey); }
+    .step:first-of-type { border-top: none; padding-top: 4px; margin-top: 24px; }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--mint);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .step h2 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin-bottom: 14px;
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    .substep {
+      display: flex;
+      gap: 16px;
+      padding-top: 22px;
+      margin-top: 22px;
+      border-top: 1px solid var(--light-grey);
+    }
+    .substep:first-of-type { border-top: none; padding-top: 4px; }
+    .substep-letter {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--light-grey);
+      color: var(--black);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .substep-body { flex: 1; min-width: 0; }
+    .substep-body h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .substep-body p { margin-bottom: 10px; font-size: 15px; }
+    .substep-body .optional-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey);
+      background: var(--light-grey);
+      padding: 2px 8px;
+      border-radius: 100px;
+      margin-left: 8px;
+      vertical-align: 2px;
+    }
+
+    .screenshot {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.08);
+      margin: 12px 0;
+    }
+
+    /* ---- Prompt block ---- */
+    .prompt {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.08);
+      overflow: hidden;
+      margin: 14px 0 8px;
+    }
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      background: rgba(0,0,0,0.02);
+    }
+    .prompt-label { font-size: 12px; font-weight: 600; color: var(--grey); }
+    .copy-btn {
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      background: var(--black); color: var(--white); border: none;
+      padding: 6px 12px; border-radius: 100px; cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .copy-btn:hover { opacity: 0.85; }
+    .copy-btn.copied { background: var(--mint); color: var(--black); }
+    .prompt-body {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13.5px;
+      line-height: 1.7;
+      padding: 14px 16px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ---- Folder tree ---- */
+    .folder-tree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; line-height: 1.8;
+      background: var(--black); color: var(--white);
+      padding: 18px 22px; border-radius: 10px;
+      margin: 20px 0;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .folder-tree .fname { color: var(--mint); }
+    .folder-tree .fcomment { color: rgba(255,255,255,0.55); }
+
+    /* ---- Callouts ---- */
+    .tip {
+      background: var(--blue-light);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14.5px;
+      line-height: 1.55;
+    }
+    .tip strong {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #3a7a96;
+      margin-bottom: 6px;
+    }
+    .callout-basic {
+      background: var(--yellow-light);
+      border-left: 4px solid var(--yellow);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .callout-basic strong {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8a6f1c;
+      margin-bottom: 6px;
+    }
+    .voice-tip {
+      background: #f3edff;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 14.5px;
+      line-height: 1.55;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .voice-tip svg { flex-shrink: 0; color: #6a3fa8; }
+    .voice-tip strong { font-weight: 700; }
+    .voice-tip a {
+      color: #6a3fa8;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(106, 63, 168, 0.35);
+    }
+    .voice-tip a:hover { border-bottom-color: #6a3fa8; }
+
+    /* ---- inline code & lists ---- */
+    .step p code,
+    .substep-body p code,
+    .substep-body li code,
+    .tip code,
+    .callout-basic code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: var(--light-grey);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .folder-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+    }
+    .folder-list li {
+      padding: 10px 0;
+      border-top: 1px solid var(--light-grey);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .folder-list li:first-child { border-top: none; }
+    .folder-list li strong {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    /* ---- Fill-in panel ---- */
+    .fill-panel {
+      background: var(--blue-light);
+      border-radius: 14px; padding: 18px 22px; margin: 16px 0;
+      border: 1px solid rgba(30, 100, 140, 0.15);
+    }
+    .fill-panel .fill-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #1c5b7a; margin-bottom: 4px;
+    }
+    .fill-panel .fill-hint {
+      font-size: 13px; color: var(--grey); margin-bottom: 14px;
+    }
+    .fill-row { display: flex; flex-direction: column; margin-bottom: 12px; }
+    .fill-row:last-child { margin-bottom: 0; }
+    .fill-row label {
+      font-size: 12px; font-weight: 600; color: var(--black);
+      margin-bottom: 5px; letter-spacing: 0.01em;
+    }
+    .fill-row input,
+    .fill-row textarea {
+      width: 100%;
+      font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5;
+      padding: 10px 12px; border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px; background: var(--white); color: var(--black);
+      transition: border-color 0.15s ease;
+    }
+    .fill-row textarea { min-height: 96px; resize: vertical; font-family: inherit; }
+    .fill-row input:focus,
+    .fill-row textarea:focus { outline: none; border-color: #1c5b7a; }
+
+    .prompt-body .placeholder {
+      background: var(--yellow-light);
+      padding: 1px 6px; border-radius: 4px;
+      font-weight: 500; color: #8a6f1c;
+    }
+    .prompt-body .filled {
+      background: var(--mint-light);
+      padding: 1px 6px; border-radius: 4px;
+      font-weight: 500; color: #2e7d58;
+    }
+
+    /* ---- Next-up callout ---- */
+    .next-card {
+      margin-top: 48px;
+      background: var(--coral);
+      border-radius: 16px;
+      padding: 22px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .next-card .label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+    .next-card .title {
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .next-card .meta {
+      font-size: 13.5px;
+      color: rgba(26,26,26,0.75);
+      margin-top: 2px;
+    }
+    .next-button {
+      background: var(--black);
+      color: var(--white);
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: none;
+      transition: opacity 0.2s ease;
+    }
+    .next-button:hover { opacity: 0.85; }
+
+    a { color: var(--black); border-bottom: 2px solid var(--yellow); text-decoration: none; }
+    a:hover { opacity: 0.7; }
+    .back-link, .next-button { border-bottom: none; }
+
+    @media (max-width: 600px) {
+      .container { padding: 40px 28px; }
+      .step h2 { font-size: 24px; }
+      .next-card { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">&larr; Agenda</a>
+    <span class="step-label">Setup Your Agent's Context &middot; ~18 min</span>
+    <h1>Setup Your Agent's Context</h1>
+    <p class="lead">Set up a folder on your desktop your agent reads, give it a couple of standing jobs, and add the first person you work with. Each step has a prompt you paste into Claude Code.</p>
+
+    <section class="step" id="step-1">
+      <div class="step-num">1</div>
+      <h2>Open Claude Code and have it build the folder for you</h2>
+      <p>You're not going to create this by hand. You're going to open Claude Code and ask it to make the folders for you. This is also a good first taste of letting a coding agent act on your own machine.</p>
+
+      <div class="substep">
+        <div class="substep-letter">A</div>
+        <div class="substep-body">
+          <h3>Open the Claude app and switch to Code</h3>
+          <p>Download the Claude desktop app from <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a> if you don't have it yet. There's just one Claude app &mdash; Chat, Cowork, and Code all live inside it.</p>
+          <p>When you open it, look at the top left, just above where it says <em>New session</em>. There's a switcher there. Pick <strong>Code</strong> &mdash; that's the one we'll use today.</p>
+          <p>Once you're in Code, you'll see a folder switcher at the top. Click <strong>Desktop</strong> so Claude Code is pointed at your desktop &mdash; that's where it'll create your context folder.</p>
+          <img src="images/2026-04-23-101658.png" alt="Claude Code folder switcher with Desktop highlighted" class="screenshot">
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-letter">B</div>
+        <div class="substep-body">
+          <h3>Switch to Bypass permissions<span class="optional-tag">Optional</span></h3>
+          <p>By default, Claude Code pauses and asks for approval before it creates or edits files. That's a safe default, but it gets chatty fast when you're asking it to set up a whole folder structure.</p>
+          <p>To let it run uninterrupted: press <code>Shift + &#8984; + M</code> (or click the mode indicator in the bottom-left) to open the Mode menu, then pick <strong>Bypass permissions</strong>.</p>
+          <img src="images/claude-code-permission-modes.png" alt="Claude Code Mode menu showing the options Ask permissions, Accept edits, Plan mode, and Bypass permissions" class="screenshot">
+          <div class="callout-basic">
+            <strong>Nervous? Skip this</strong>
+            If you'd rather watch every change before it happens, leave the default on and just click <em>Accept</em> each time it asks. You'll get the same result &mdash; it just takes a few more clicks.
+          </div>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-letter">C</div>
+        <div class="substep-body">
+          <h3>Paste this prompt</h3>
+          <p>Tell Claude Code exactly what to build. Copy and paste:</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Create a folder called "context" on my desktop. Inside it, create these subfolders:
+
+- Me — where my role, priorities, and goals go
+- Team — information about the different people I work with
+- Projects — my active projects with their status
+- Company Context — strategy docs, org-wide goals, and anything that sets the broader context of my work
+- Admin — daily notes and skills; this is where I want you to save any skills we make together</div>
+          </div>
+          <p>Claude Code will create the folder on your desktop, make all five subfolders, and drop a README in each one. Check your desktop &mdash; you should see a new <code>context</code> folder.</p>
+        </div>
+      </div>
+
+      <div class="tip">
+        <strong>What just happened</strong>
+        You gave Claude Code a goal in plain English and it translated that into file-system actions on your actual computer. That's the whole pattern for the rest of today &mdash; you describe what you want, it does the work.
+      </div>
+
+      <div class="voice-tip">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        <div>
+          <strong>Prefer to talk?</strong> Try voice &mdash; download <a href="https://wisprflow.ai/" target="_blank" rel="noopener">Wispr Flow</a>, or use native dictation and hit the mic under the chat.
+        </div>
+      </div>
+    </section>
+
+    <section class="step" id="folders">
+      <div class="step-num">2</div>
+      <h2>What goes in each folder</h2>
+      <p>You don't need to fill these in all at once. The point of the structure is that when you learn something worth remembering &mdash; about a teammate, a project, your own goals for the quarter &mdash; you know where it goes.</p>
+
+      <div class="folder-tree"><span class="fcomment">~/Desktop/</span>
+<span class="fname">context/</span>
+&#9500;&#9472;&#9472; <span class="fname">Me/</span>              <span class="fcomment"># your role, priorities, goals</span>
+&#9500;&#9472;&#9472; <span class="fname">Team/</span>            <span class="fcomment"># people you work with</span>
+&#9500;&#9472;&#9472; <span class="fname">Projects/</span>        <span class="fcomment"># active projects with status</span>
+&#9500;&#9472;&#9472; <span class="fname">Company Context/</span> <span class="fcomment"># strategy, org goals, the bigger picture</span>
+&#9492;&#9472;&#9472; <span class="fname">Admin/</span>           <span class="fcomment"># daily notes and skills</span></div>
+
+      <ul class="folder-list">
+        <li><strong>Me/</strong> &mdash; Who you are in this job. Your role, what you're trying to get done this quarter, what you care about, what you're working on growing. When an AI drafts something "as you," this is what makes it sound like you and not a generic LinkedIn post.</li>
+        <li><strong>Team/</strong> &mdash; One file per person you work with closely. Their role, how they communicate, what they're working on, things you've learned about how to work with them well. This turns "help me write a message to Sam" into something actually tailored.</li>
+        <li><strong>Projects/</strong> &mdash; One folder per active project. Inside, keep whatever the project produces &mdash; drafts, notes, status, related docs. The folder name itself is the project; what's in it grows as the work does.</li>
+        <li><strong>Company Context/</strong> &mdash; Strategy docs, org-wide goals, the annual plan, anything that sets the broader frame of your work. Paste it in or link to it.</li>
+        <li><strong>Admin/</strong> &mdash; Your daily notes (a running log of what you worked on each day) and your skills (reusable prompts saved as files &mdash; you'll build these as you go). When you and Claude Code make a skill together, this is where it lives.</li>
+      </ul>
+
+      <div class="tip">
+        <strong>Build it over time</strong>
+        You don't need to set this up front if you don't want to. The directory gets richer every time you use it &mdash; you notice what's missing when an agent's output is too generic, and you add it then.
+      </div>
+    </section>
+
+    <section class="step" id="reminders">
+      <div class="step-num">3</div>
+      <h2>Give it a real job: track your reminders</h2>
+      <p>Empty folders aren't very interesting. Let's give Claude Code something useful to do &mdash; keep a running list of everything on your plate, and update it automatically every time you mention a new task.</p>
+
+      <div class="substep">
+        <div class="substep-letter">A</div>
+        <div class="substep-body">
+          <h3>Create the reminders file</h3>
+          <p>Type a few things that are on your plate right now &mdash; work or personal, whatever's rattling around in your head. Aim for three to five. Claude will sort them into categories when it writes the file.</p>
+          <div class="fill-panel">
+            <div class="fill-label">What's on your plate</div>
+            <p class="fill-hint">One per line. Don't bother organizing &mdash; that's Claude's job.</p>
+            <div class="fill-row">
+              <label for="reminders-list">Things on your plate</label>
+              <textarea id="reminders-list" placeholder="Finish Q2 slide deck for Friday&#10;Book Duncan's dentist appointment&#10;Reply to Lisa's email about the launch&#10;Draft feedback for Sam's review"></textarea>
+            </div>
+          </div>
+          <div class="prompt" data-template="reminders">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt &mdash; paste into Claude Code</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-letter">B</div>
+        <div class="substep-body">
+          <h3>Make it automatic going forward</h3>
+          <p>Now teach Claude to keep the list updated without you asking. Paste this:</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Add an instruction to my CLAUDE.md file: whenever I mention something I need to do, a task, a reminder, or a to-do, add it to reminders.md in my Admin folder. Keep the file organized by category and urgency.</div>
+          </div>
+          <p><code>CLAUDE.md</code> is a standing-instructions file Claude Code reads at the start of every session. Anything in there applies automatically &mdash; so from now on, when you say "I need to follow up with Sam" or "remind me to renew my passport," it lands in your reminders without you doing anything else.</p>
+        </div>
+      </div>
+
+      <div class="callout-basic">
+        <strong>Expect to tweak this</strong>
+        Don't expect it to work perfectly the first time. As you use it, you'll notice things &mdash; it'll miss something it should have caught, or capture stuff that doesn't belong. Give it feedback. The system gets better because you keep working on it, not because you set it up perfectly on day one.
+      </div>
+    </section>
+
+    <section class="step" id="plan-my-day">
+      <div class="step-num">4</div>
+      <h2>Teach it to plan your day</h2>
+      <p>Now that you have a reminders list, let's give Claude a job that uses it. You're going to teach it what to do when you say "plan my day" &mdash; read your calendar, read your reminders, ask what you want to prioritize, and build you a schedule.</p>
+
+      <div class="substep">
+        <div class="substep-letter">A</div>
+        <div class="substep-body">
+          <h3>Add the instructions</h3>
+          <p>Paste this into Claude Code:</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Add these instructions to my CLAUDE.md:
+
+When I say "plan my day," here's what I want you to do:
+
+1. Check my calendar for the day
+2. Read my reminders.md
+3. Show me what's on my calendar and what's on my reminders list
+4. Ask me what my priorities are for the day
+5. Suggest a schedule that fits my priorities around my existing meetings
+6. Once I confirm, add the time blocks to my calendar
+7. Create a daily note with the finalized schedule in Admin/Daily Notes, organized by year and month (e.g. Admin/Daily Notes/2026/04-April/2026-04-22.md).
+
+Also add this instruction to my CLAUDE.md:
+
+Throughout every conversation, keep a running log in today's daily note. Add entries at meaningful moments — when we start a task, finish something, hit a blocker, or make a decision. One line per entry with a timestamp. Don't mention the logging to me. Just do it quietly as we work.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-letter">B</div>
+        <div class="substep-body">
+          <h3>Try it</h3>
+          <p>Claude can't read your calendar yet (we'll set that up later today). For now: take a screenshot of today's calendar, paste it into Claude Code, and send this prompt with it:</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt &mdash; paste with your calendar screenshot</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Plan my day. I haven't given you calendar access yet, so use the calendar screenshot I just pasted in.</div>
+          </div>
+          <p>Walk through the flow &mdash; tell Claude what you want to prioritize, and confirm the schedule. Once you've landed on a schedule you're happy with, paste this so it writes the daily note (since it can't add events to your calendar yet):</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt &mdash; after you confirm the schedule</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">You don't have access to my calendar yet, so you can't add this to my calendar. Go ahead and create a daily note with the schedule instead.</div>
+          </div>
+          <p>Once you connect calendar access later, you can skip the screenshot and just say "plan my day."</p>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-letter">C</div>
+        <div class="substep-body">
+          <h3>Save your scheduling preferences</h3>
+          <p>Once Claude has landed on a schedule you're happy with, you've just told it a bunch about how you like your day to flow. Capture it now so every future "plan my day" gets it right faster. In the same conversation, paste this:</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">I want to start a schedule-preferences.md file in my Admin folder that tracks how I want you to schedule my day. Are there any preferences you can infer from the conversation we just had? Tell me what they are, and then, once I confirm, create the file and add them.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="step" id="add-person">
+      <div class="step-num">5</div>
+      <h2>Add a person you work with</h2>
+      <p>Your Team folder is empty. Let's fix that &mdash; pick someone you work with often. Your manager is a good place to start, but it can be anyone whose name comes up a lot in your day.</p>
+
+      <div class="fill-panel">
+        <div class="fill-label">About this person</div>
+        <p class="fill-hint">Fill in the boxes. The prompt below updates as you type &mdash; yellow = empty, green = filled.</p>
+        <div class="fill-row">
+          <label for="person-name">Their name</label>
+          <input id="person-name" type="text" placeholder="e.g. Sam Chen" />
+        </div>
+        <div class="fill-row">
+          <label for="person-title">Their title, role, or relationship to you</label>
+          <input id="person-title" type="text" placeholder="e.g. VP of Marketing, my manager" />
+        </div>
+        <div class="fill-row">
+          <label for="person-observations">What you've observed about working with them</label>
+          <textarea id="person-observations" placeholder="A few quick notes — how they communicate, what they care about, what to keep in mind. Just one or two things is fine."></textarea>
+        </div>
+      </div>
+
+      <div class="prompt" data-template="person">
+        <div class="prompt-header">
+          <span class="prompt-label">Prompt &mdash; paste into Claude Code</span>
+          <button class="copy-btn" type="button">Copy</button>
+        </div>
+        <div class="prompt-body"></div>
+      </div>
+
+      <div class="tip">
+        <strong>Why this matters</strong>
+        Once this file exists, every time you mention this person to Claude &mdash; "draft a reply to Sam," "help me prep for my 1:1 with Sam" &mdash; it pulls their context in automatically. And because you told it to update the file when you share new things, the file gets richer the more you use it.
+      </div>
+    </section>
+
+    <section class="step" id="bring-it-together">
+      <div class="step-num">6</div>
+      <h2>Bring it all together</h2>
+      <p>You've set up the folders, captured what's on your plate, planned your day, and added a person to your team. Now let's see what all that context actually buys you.</p>
+
+      <div class="substep">
+        <div class="substep-letter">A</div>
+        <div class="substep-body">
+          <h3>Start a fresh Claude Code session</h3>
+          <p>Open a new chat in Claude Code and make sure it's still pointed at your context folder. Starting fresh proves the system works on its own &mdash; it's just the files doing the work, not the conversation you've been having.</p>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-letter">B</div>
+        <div class="substep-body">
+          <h3>Ask it to draft an email about your day</h3>
+          <p>Paste this:</p>
+          <div class="prompt">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body">Read my daily note for today, and write an email that tells a hypothetical person what I'm going to be working on today.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="substep">
+        <div class="substep-letter">C</div>
+        <div class="substep-body">
+          <h3>Now make it personal</h3>
+          <p>Same conversation. Paste this:</p>
+          <div class="prompt" data-template="email-rewrite">
+            <div class="prompt-header">
+              <span class="prompt-label">Prompt</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <div class="prompt-body"></div>
+          </div>
+          <p>Compare the two versions. The first one knows about your day. The second one knows about your day <em>and</em> who you're writing to. That's what the context layers buy you &mdash; every file you add makes every future answer more specific.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Copy button (event delegation)
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      const body = btn.closest('.prompt').querySelector('.prompt-body');
+      try {
+        await navigator.clipboard.writeText(body.innerText);
+      } catch (err) {
+        const range = document.createRange();
+        range.selectNode(body);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+      }
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 1500);
+    });
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function fillSpan(value, fallback) {
+      const has = value && value.trim().length > 0;
+      const out = has ? value.trim() : fallback;
+      return `<span class="${has ? 'filled' : 'placeholder'}">${escapeHtml(out)}</span>`;
+    }
+
+    // Reminders templated prompt
+    const remindersTemplate = `Create a file called reminders.md in my Admin folder. Organize it by category — whatever categories make sense based on what I tell you. Here's what's currently on my plate:
+
+{{reminders}}`;
+    function renderRemindersPrompt() {
+      const body = document.querySelector('.prompt[data-template="reminders"] .prompt-body');
+      if (!body) return;
+      const reminders = document.getElementById('reminders-list').value;
+      const remindersSpan = fillSpan(reminders, '[3–5 things on your plate]');
+      let html = escapeHtml(remindersTemplate);
+      html = html.replace(/\{\{reminders\}\}/g, remindersSpan);
+      body.innerHTML = html;
+    }
+    const remindersEl = document.getElementById('reminders-list');
+    if (remindersEl) remindersEl.addEventListener('input', renderRemindersPrompt);
+    renderRemindersPrompt();
+
+    // Person templated prompt
+    const personTemplate = `Add a file in my Team folder for {{name}}. Here's what I know about them:
+
+Role: {{title}}
+
+What I've observed about working with them:
+{{observations}}
+
+Going forward: whenever I talk about {{name}}, pull this file in for context. If I tell you new things about them — how they communicate, what they're working on, what to keep in mind — update this file.`;
+    function renderPersonPrompt() {
+      const body = document.querySelector('.prompt[data-template="person"] .prompt-body');
+      if (!body) return;
+      const name = document.getElementById('person-name').value;
+      const title = document.getElementById('person-title').value;
+      const obs = document.getElementById('person-observations').value;
+      const nameSpan = fillSpan(name, '[their name]');
+      const titleSpan = fillSpan(title, '[their title or role]');
+      const obsSpan = fillSpan(obs, '[a few things you’ve observed]');
+      let html = escapeHtml(personTemplate);
+      html = html.replace(/\{\{name\}\}/g, nameSpan);
+      html = html.replace(/\{\{title\}\}/g, titleSpan);
+      html = html.replace(/\{\{observations\}\}/g, obsSpan);
+      body.innerHTML = html;
+    }
+    ['person-name', 'person-title', 'person-observations'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', renderPersonPrompt);
+    });
+    renderPersonPrompt();
+
+    // Email-rewrite prompt (pulls name from Step 5)
+    const emailRewriteTemplate = `I'm writing this email to {{name}}. Rewrite it so it's more aligned with why they should care.`;
+    function renderEmailRewritePrompt() {
+      const body = document.querySelector('.prompt[data-template="email-rewrite"] .prompt-body');
+      if (!body) return;
+      const nameInput = document.getElementById('person-name');
+      const name = nameInput ? nameInput.value : '';
+      const nameSpan = fillSpan(name, '[their name]');
+      let html = escapeHtml(emailRewriteTemplate).replace(/\{\{name\}\}/g, nameSpan);
+      body.innerHTML = html;
+    }
+    const personNameForEmail = document.getElementById('person-name');
+    if (personNameForEmail) personNameForEmail.addEventListener('input', renderEmailRewritePrompt);
+    renderEmailRewritePrompt();
+  </script>
+</body>
+</html>
