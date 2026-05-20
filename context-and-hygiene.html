@@ -12,6 +12,7 @@
     :root {
       --blue-light: #d6eef7;
       --mint: #A8E6CE;
+      --coral: #F08080;
       --yellow: #E8C840;
       --black: #1a1a1a;
       --grey: #6b6b6b;
@@ -32,7 +33,7 @@
       padding: 48px 24px;
     }
     .container {
-      max-width: 720px;
+      max-width: 760px;
       width: 100%;
       background: var(--white);
       border-radius: 24px;
@@ -62,22 +63,122 @@
       letter-spacing: -0.02em;
       margin-bottom: 16px;
     }
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-top: 48px;
+      margin-bottom: 12px;
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      margin-top: 24px;
+      margin-bottom: 6px;
+    }
     .lead {
       font-size: 18px;
       color: var(--grey);
-      margin-bottom: 40px;
+      margin-bottom: 8px;
     }
-    .placeholder {
-      background: var(--light-grey);
+    p { margin-bottom: 14px; }
+    p.tight { margin-bottom: 8px; }
+
+    .download-card {
+      background: var(--mint);
       border-radius: 16px;
-      padding: 32px;
-      color: var(--grey);
-      font-size: 15px;
-      font-style: italic;
-      text-align: center;
+      padding: 24px 28px;
+      margin-top: 32px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
     }
+    .download-card .label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+    .download-card .title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .download-card .meta {
+      font-size: 13px;
+      color: rgba(26,26,26,0.65);
+      margin-top: 4px;
+    }
+    .download-button {
+      background: var(--black);
+      color: var(--white);
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+    .download-button:hover { opacity: 0.85; }
+
+    .tree {
+      background: var(--light-grey);
+      border-radius: 12px;
+      padding: 22px 26px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--black);
+      overflow-x: auto;
+      margin: 16px 0 8px;
+    }
+    .tree .comment { color: var(--grey); }
+
+    .folder {
+      border-left: 3px solid var(--yellow);
+      padding: 4px 0 4px 18px;
+      margin: 18px 0;
+    }
+    .folder.coral { border-left-color: var(--coral); }
+    .folder.mint  { border-left-color: var(--mint); }
+    .folder.blue  { border-left-color: #7ec2db; }
+    .folder code, p code, li code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      font-size: 0.9em;
+      background: var(--light-grey);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .folder h3 { margin-top: 0; }
+    .folder p { color: var(--black); margin-bottom: 8px; }
+    .folder p.why { color: var(--grey); font-size: 14px; margin-bottom: 0; }
+    .folder ul { margin: 6px 0 8px 18px; }
+    .folder li { margin-bottom: 4px; font-size: 14.5px; }
+
+    .callout {
+      background: #fff8d8;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 14.5px;
+    }
+    .callout strong { font-weight: 700; }
+
+    a { color: var(--black); border-bottom: 2px solid var(--yellow); text-decoration: none; }
+    a:hover { opacity: 0.7; }
+    .download-card a.download-button { border-bottom: none; }
+    .back-link { border-bottom: none; }
+
     @media (max-width: 600px) {
       .container { padding: 40px 28px; }
+      .download-card { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -86,9 +187,125 @@
     <a href="index.html" class="back-link">&larr; Agenda</a>
     <span class="step-label">Step 3 of 5 &middot; 18 min</span>
     <h1>Context &amp; agent hygiene</h1>
-    <p class="lead">Set up the folder system your agent reads, and the loop to keep it updated.</p>
+    <p class="lead">Set up the folder system your agent reads, and the loop that keeps it updated.</p>
 
-    <div class="placeholder">Outline coming.</div>
+    <p>An agent without context is a stranger every time you open a new chat. The fix isn&rsquo;t a longer prompt &mdash; it&rsquo;s a <strong>vault</strong>: a folder on your machine your agent reads every session. Identity in one place, working memory in another, reusable procedures in another. Below is the architecture and what each folder is for.</p>
+
+    <div class="download-card">
+      <div>
+        <div class="label">Download</div>
+        <div class="title">agent-context-template.zip</div>
+        <div class="meta">Pre-scaffolded vault &middot; ~230&nbsp;KB &middot; unzip anywhere, open with <code>claude .</code></div>
+      </div>
+      <a href="agent-context-template.zip" class="download-button" download>Download &darr;</a>
+    </div>
+
+    <h2>The shape</h2>
+
+    <div class="tree">
+agent-context-template/
+&nbsp;&nbsp;CLAUDE.md                <span class="comment"># root system instructions (loaded every session)</span>
+&nbsp;&nbsp;AGENTS.md                <span class="comment"># same, for Codex</span>
+&nbsp;&nbsp;Vault-Architecture.md    <span class="comment"># the full manual</span>
+&nbsp;&nbsp;agent/
+&nbsp;&nbsp;&nbsp;&nbsp;Soul.md              <span class="comment"># who the agent is</span>
+&nbsp;&nbsp;&nbsp;&nbsp;Mind.md              <span class="comment"># how it thinks</span>
+&nbsp;&nbsp;&nbsp;&nbsp;Identity.md          <span class="comment"># name, voice, visual identity</span>
+&nbsp;&nbsp;&nbsp;&nbsp;scripts/             <span class="comment"># hooks + helpers (Stop-hook, nightly cycle)</span>
+&nbsp;&nbsp;&nbsp;&nbsp;secrets/             <span class="comment"># tokens (gitignored)</span>
+&nbsp;&nbsp;Memory/
+&nbsp;&nbsp;&nbsp;&nbsp;Hippocampus.md       <span class="comment"># working memory — Now + Arc</span>
+&nbsp;&nbsp;&nbsp;&nbsp;Daily/               <span class="comment"># raw session capture (one file per day)</span>
+&nbsp;&nbsp;&nbsp;&nbsp;Weekly/              <span class="comment"># end-of-week syntheses</span>
+&nbsp;&nbsp;&nbsp;&nbsp;People/              <span class="comment"># one note per person in your life</span>
+&nbsp;&nbsp;&nbsp;&nbsp;Lessons/             <span class="comment"># operational learnings you don&rsquo;t want to repeat</span>
+&nbsp;&nbsp;&nbsp;&nbsp;Preferences/         <span class="comment"># working-style notes</span>
+&nbsp;&nbsp;&nbsp;&nbsp;Meetings/            <span class="comment"># meeting transcripts (Granola sync)</span>
+&nbsp;&nbsp;&nbsp;&nbsp;Connectors/          <span class="comment"># one note per data source + status</span>
+&nbsp;&nbsp;Skills/                  <span class="comment"># reusable procedures = slash commands</span>
+&nbsp;&nbsp;_seed/                   <span class="comment"># drop-zone for personality bundle</span>
+&nbsp;&nbsp;.claude/  .codex/        <span class="comment"># project hooks (Stop, UserPromptSubmit)</span>
+    </div>
+
+    <h2>What each folder gives your agent</h2>
+
+    <div class="folder coral">
+      <h3><code>CLAUDE.md</code> (root)</h3>
+      <p>The first thing your agent reads every session. Tells it the name of the agent, the vault layout, and the operating rules (skills first, daily log every session, nothing gets deleted).</p>
+      <p class="why"><strong>Why it matters:</strong> without this, the agent is a blank-slate stranger every time. With it, your agent walks into the room already knowing where it is.</p>
+    </div>
+
+    <div class="folder coral">
+      <h3><code>agent/</code> &mdash; identity</h3>
+      <p>Three short files that define who the agent <em>is</em> &mdash; pulled in via <code>@</code>-imports inside <code>CLAUDE.md</code>.</p>
+      <ul>
+        <li><code>Soul.md</code> &mdash; voice register, loyalty, the bond. The values layer.</li>
+        <li><code>Mind.md</code> &mdash; canonical reasoning moves. How to push back, when to ask vs. assume.</li>
+        <li><code>Identity.md</code> &mdash; name, pronouns, visual identity. The outward-facing shell.</li>
+      </ul>
+      <p class="why"><strong>Why it matters:</strong> personality and behavior stop being something you re-prompt every session. They&rsquo;re durable. The agent disagrees with you the same way on Tuesday as it did on Monday.</p>
+    </div>
+
+    <div class="folder mint">
+      <h3><code>Memory/Hippocampus.md</code> &mdash; working memory</h3>
+      <p>Two sections: <strong>Now</strong> (this week &mdash; what&rsquo;s active, what&rsquo;s on the calendar today, open threads) and <strong>Arc</strong> (longer horizon &mdash; who you are, where you&rsquo;re going). Always loaded.</p>
+      <p class="why"><strong>Why it matters:</strong> this is what makes the agent feel <em>continuous</em>. It opens the file and immediately knows what you&rsquo;re in the middle of.</p>
+    </div>
+
+    <div class="folder mint">
+      <h3><code>Memory/Daily/</code> &mdash; raw capture</h3>
+      <p>One file per day, multiple sessions separated by <code>---</code>. Written automatically by the <strong>Stop hook</strong> (in <code>agent/scripts/</code>) at the end of every session. Raw, ugly, unfiltered.</p>
+      <p class="why"><strong>Why it matters:</strong> the input surface. You don&rsquo;t have to remember to journal &mdash; the agent journals for you, and the nightly cycle distills the signal out.</p>
+    </div>
+
+    <div class="folder mint">
+      <h3><code>Memory/People/</code></h3>
+      <p>One markdown file per person who matters &mdash; family, colleagues, classmates, friends. Last interaction, ongoing threads, what they care about, links to relevant emails/messages.</p>
+      <p class="why"><strong>Why it matters:</strong> the agent stops asking &ldquo;who&rsquo;s that?&rsquo;&rsquo; You can say &ldquo;draft a check-in to Mara&rdquo; and it has the context to make it sound like you.</p>
+    </div>
+
+    <div class="folder mint">
+      <h3><code>Memory/Lessons/</code> &amp; <code>Memory/Preferences/</code></h3>
+      <p>Operational learnings (&ldquo;don&rsquo;t use mocks for integration tests &mdash; we got burned&rdquo;) and working-style notes (&ldquo;mornings = deep work, no meetings before 10&rdquo;). Written by the extraction subagent when patterns recur.</p>
+      <p class="why"><strong>Why it matters:</strong> mistakes compound into wisdom instead of evaporating. You don&rsquo;t correct the agent on the same thing twice.</p>
+    </div>
+
+    <div class="folder mint">
+      <h3><code>Memory/Weekly/</code>, <code>Meetings/</code>, <code>Connectors/</code></h3>
+      <p>Weekly syntheses (Friday wrap-ups), meeting transcripts (Granola), and one note per data source you&rsquo;ve wired up (Gmail, Calendar, Notion, Canvas) with its current status &mdash; so the agent knows what it can and can&rsquo;t reach.</p>
+      <p class="why"><strong>Why it matters:</strong> the agent knows where its eyes are. &ldquo;Check my calendar&rdquo; works because there&rsquo;s a Connectors/ note that says <em>yes, Gmail Calendar is wired, here&rsquo;s the account.</em></p>
+    </div>
+
+    <div class="folder yellow">
+      <h3><code>Skills/</code> &mdash; reusable procedures</h3>
+      <p>Each subfolder is one named procedure (<code>plan-my-day/</code>, <code>send-email/</code>, <code>session-handoff/</code>) with a <code>SKILL.md</code> describing pre-checks, work, evals, and definition-of-done. They register as slash commands &mdash; type <code>/plan-my-day</code> and the agent runs the procedure exactly the same way every time.</p>
+      <p class="why"><strong>Why it matters:</strong> the difference between a chatbot and an agent. When something is worth doing twice, it becomes a skill. Reliability over cleverness.</p>
+    </div>
+
+    <div class="folder blue">
+      <h3><code>.claude/</code> &amp; <code>.codex/</code> &mdash; hooks</h3>
+      <p>The <strong>Stop hook</strong> appends every session to <code>Memory/Daily/</code>. The <strong>UserPromptSubmit hook</strong> (optional, wired later) does vector recall on your prompt and pulls relevant chunks of the vault back into context.</p>
+      <p class="why"><strong>Why it matters:</strong> the loop closes itself. You don&rsquo;t have to remember to save; the system remembers for you.</p>
+    </div>
+
+    <div class="folder blue">
+      <h3><code>_seed/</code> &mdash; personalization input</h3>
+      <p>Drop a folder here with your answers (<code>answers.yaml</code>, an essay, voice samples) and the <code>/hatch</code> skill reads it once to personalize the templates &mdash; substituting <code>{{agent_name}}</code>, <code>{{user_name}}</code>, voice register, domain folders. Then it gets archived.</p>
+      <p class="why"><strong>Why it matters:</strong> the boring &ldquo;set up my agent&rsquo;s personality&rdquo; step happens once, deterministically, from a structured input &mdash; not through 40 messages of back-and-forth.</p>
+    </div>
+
+    <h2>The hygiene loop</h2>
+    <p>Three loops keep the system from rotting:</p>
+    <ol style="margin-left: 22px; margin-bottom: 16px;">
+      <li><strong>Every session</strong> &mdash; Stop hook writes raw capture to <code>Memory/Daily/</code>.</li>
+      <li><strong>Every night</strong> &mdash; <code>/rem-cycle</code> extracts signal from daily notes into <code>People/</code>, <code>Lessons/</code>, <code>Preferences/</code>, and refreshes <code>Hippocampus.md</code>&rsquo;s <strong>Now</strong>.</li>
+      <li><strong>Every ~48&nbsp;hours</strong> &mdash; the <strong>Arc</strong> section of Hippocampus gets refreshed from longer-horizon signal.</li>
+    </ol>
+    <p>You don&rsquo;t maintain it. The system maintains itself, and you correct it when it&rsquo;s wrong.</p>
+
+    <div class="callout">
+      <strong>Try it now:</strong> download the zip above, unzip it anywhere you like, <code>cd</code> in, and open Claude Code with <code>claude .</code>. The <code>CLAUDE.md</code> at the root will load automatically &mdash; ask your agent &ldquo;what&rsquo;s in this vault?&rdquo; and watch it walk itself through the structure. Then move on to <a href="build-an-agent.html">Step 4 &mdash; Build your agent</a>.
+    </div>
   </div>
 </body>
 </html>
