@@ -11,11 +11,17 @@
   <style>
     :root {
       --blue-light: #d6eef7;
+      --blue: #A8D8EA;
+      --blue-deep: #7ec2db;
       --mint: #A8E6CE;
+      --mint-deep: #6ed0ad;
       --coral: #F08080;
+      --coral-soft: #f8b5b5;
       --yellow: #E8C840;
+      --yellow-soft: #f4dd7a;
       --black: #1a1a1a;
       --grey: #6b6b6b;
+      --grey-soft: #a3a3a3;
       --light-grey: #f7f7f5;
       --white: #ffffff;
     }
@@ -33,7 +39,7 @@
       padding: 48px 24px;
     }
     .container {
-      max-width: 760px;
+      max-width: 820px;
       width: 100%;
       background: var(--white);
       border-radius: 24px;
@@ -64,18 +70,17 @@
       margin-bottom: 16px;
     }
     h2 {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
       letter-spacing: -0.01em;
-      margin-top: 48px;
+      margin-top: 56px;
       margin-bottom: 12px;
     }
     h3 {
       font-size: 17px;
       font-weight: 700;
       letter-spacing: -0.005em;
-      margin-top: 24px;
-      margin-bottom: 6px;
+      margin: 0 0 6px 0;
     }
     .lead {
       font-size: 18px;
@@ -83,14 +88,12 @@
       margin-bottom: 8px;
     }
     p { margin-bottom: 14px; }
-    p.tight { margin-bottom: 8px; }
 
     .download-card {
       background: var(--mint);
       border-radius: 16px;
       padding: 24px 28px;
-      margin-top: 32px;
-      margin-bottom: 8px;
+      margin-top: 36px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -125,71 +128,182 @@
       text-decoration: none;
       white-space: nowrap;
       transition: opacity 0.2s ease;
+      border-bottom: none;
     }
     .download-button:hover { opacity: 0.85; }
 
-    .tree {
+    .diagram {
       background: var(--light-grey);
-      border-radius: 12px;
-      padding: 22px 26px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-      font-size: 13.5px;
-      line-height: 1.7;
-      color: var(--black);
-      overflow-x: auto;
+      border-radius: 16px;
+      padding: 28px 24px;
       margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .tree .comment { color: var(--grey); }
+    .diagram svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      text-align: center;
+      font-size: 13px;
+      color: var(--grey);
+      font-style: italic;
+      margin-top: 6px;
+      margin-bottom: 16px;
+    }
 
     .folder {
-      border-left: 3px solid var(--yellow);
-      padding: 4px 0 4px 18px;
-      margin: 18px 0;
+      border-left: 4px solid var(--yellow);
+      background: var(--light-grey);
+      border-radius: 0 14px 14px 0;
+      padding: 18px 22px;
+      margin: 14px 0;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 18px;
+      align-items: start;
     }
     .folder.coral { border-left-color: var(--coral); }
-    .folder.mint  { border-left-color: var(--mint); }
-    .folder.blue  { border-left-color: #7ec2db; }
+    .folder.mint  { border-left-color: var(--mint-deep); }
+    .folder.blue  { border-left-color: var(--blue-deep); }
+    .folder.yellow { border-left-color: var(--yellow); }
+
+    .folder .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .folder.coral .icon { color: var(--coral); }
+    .folder.mint  .icon { color: var(--mint-deep); }
+    .folder.blue  .icon { color: var(--blue-deep); }
+    .folder.yellow .icon { color: #c2a52e; }
+
     .folder code, p code, li code {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
       font-size: 0.9em;
-      background: var(--light-grey);
+      background: rgba(0,0,0,0.05);
       padding: 2px 6px;
       border-radius: 4px;
     }
-    .folder h3 { margin-top: 0; }
-    .folder p { color: var(--black); margin-bottom: 8px; }
-    .folder p.why { color: var(--grey); font-size: 14px; margin-bottom: 0; }
+    .folder p { color: var(--black); margin-bottom: 8px; font-size: 15px; }
+    .folder p.why { color: var(--grey); font-size: 13.5px; margin-bottom: 0; }
     .folder ul { margin: 6px 0 8px 18px; }
-    .folder li { margin-bottom: 4px; font-size: 14.5px; }
+    .folder li { margin-bottom: 4px; font-size: 14px; }
+    .folder h3 .path {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      font-size: 0.85em;
+      background: rgba(0,0,0,0.05);
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-weight: 600;
+      margin-right: 8px;
+    }
 
     .callout {
       background: #fff8d8;
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin: 24px 0;
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin: 28px 0 0;
       font-size: 14.5px;
     }
     .callout strong { font-weight: 700; }
 
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 8px 0 24px;
+      justify-content: center;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--grey);
+      background: var(--light-grey);
+      padding: 6px 12px;
+      border-radius: 999px;
+    }
+    .chip .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+
     a { color: var(--black); border-bottom: 2px solid var(--yellow); text-decoration: none; }
     a:hover { opacity: 0.7; }
-    .download-card a.download-button { border-bottom: none; }
     .back-link { border-bottom: none; }
 
     @media (max-width: 600px) {
-      .container { padding: 40px 28px; }
+      .container { padding: 40px 24px; }
       .download-card { flex-direction: column; align-items: flex-start; }
+      .folder { grid-template-columns: 44px 1fr; gap: 14px; padding: 16px; }
+      .folder .icon { width: 40px; height: 40px; }
+      .diagram { padding: 20px 12px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <a href="index.html" class="back-link">&larr; Agenda</a>
-    <span class="step-label">Step 3 of 5 &middot; 18 min</span>
+    <span class="step-label">Step 4 of 5 &middot; 18 min</span>
     <h1>Context &amp; agent hygiene</h1>
     <p class="lead">Set up the folder system your agent reads, and the loop that keeps it updated.</p>
 
-    <p>An agent without context is a stranger every time you open a new chat. The fix isn&rsquo;t a longer prompt &mdash; it&rsquo;s a <strong>vault</strong>: a folder on your machine your agent reads every session. Identity in one place, working memory in another, reusable procedures in another. Below is the architecture and what each folder is for.</p>
+    <p style="margin-top: 20px;">An agent without context is a stranger every time you open a new chat. The fix isn&rsquo;t a longer prompt &mdash; it&rsquo;s a <strong>vault</strong>: a folder on your machine your agent reads every session. Identity in one place, working memory in another, reusable procedures in another.</p>
+
+    <h2 style="margin-top: 40px;">How your agent reads the vault</h2>
+    <p style="color: var(--grey); font-size: 15px;">Every time you open a session, this happens in milliseconds &mdash; before you&rsquo;ve typed a word.</p>
+    <div class="diagram" aria-label="Diagram: agent loading vault context">
+      <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+          </marker>
+        </defs>
+        <g>
+          <rect x="20" y="150" width="120" height="60" rx="12" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+          <text x="80" y="175" text-anchor="middle" font-family="Inter" font-size="13" font-weight="700" fill="#1a1a1a">Your prompt</text>
+          <text x="80" y="195" text-anchor="middle" font-family="Inter" font-size="11" fill="#6b6b6b">"plan my day"</text>
+        </g>
+        <line x1="142" y1="180" x2="195" y2="180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="200" y="145" width="130" height="70" rx="12" fill="#F08080"/>
+          <text x="265" y="170" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="13" font-weight="700" fill="#1a1a1a">CLAUDE.md</text>
+          <text x="265" y="190" text-anchor="middle" font-family="Inter" font-size="10" fill="#1a1a1a">root instructions</text>
+          <text x="265" y="203" text-anchor="middle" font-family="Inter" font-size="10" fill="#1a1a1a">loads:</text>
+        </g>
+        <path d="M330 165 Q400 165 470 70" stroke="#1a1a1a" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+        <path d="M330 180 L470 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <path d="M330 195 Q400 195 470 290" stroke="#1a1a1a" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+        <g>
+          <rect x="475" y="40" width="140" height="65" rx="12" fill="#f8b5b5"/>
+          <text x="545" y="62" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" font-weight="700" fill="#1a1a1a">agent/</text>
+          <text x="545" y="80" text-anchor="middle" font-family="Inter" font-size="11" fill="#1a1a1a">identity</text>
+          <text x="545" y="94" text-anchor="middle" font-family="Inter" font-size="10" fill="#6b6b6b">Soul · Mind · Identity</text>
+        </g>
+        <g>
+          <rect x="475" y="148" width="140" height="65" rx="12" fill="#A8E6CE"/>
+          <text x="545" y="170" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" font-weight="700" fill="#1a1a1a">Memory/</text>
+          <text x="545" y="188" text-anchor="middle" font-family="Inter" font-size="11" fill="#1a1a1a">Hippocampus</text>
+          <text x="545" y="202" text-anchor="middle" font-family="Inter" font-size="10" fill="#6b6b6b">Now + Arc</text>
+        </g>
+        <g>
+          <rect x="475" y="258" width="140" height="65" rx="12" fill="#E8C840"/>
+          <text x="545" y="280" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" font-weight="700" fill="#1a1a1a">Skills/</text>
+          <text x="545" y="298" text-anchor="middle" font-family="Inter" font-size="11" fill="#1a1a1a">procedures</text>
+          <text x="545" y="312" text-anchor="middle" font-family="Inter" font-size="10" fill="#6b6b6b">slash commands</text>
+        </g>
+        <text x="360" y="345" text-anchor="middle" font-family="Inter" font-size="11" font-style="italic" fill="#6b6b6b">
+          Your agent now knows: who it is, what you&rsquo;re working on this week, and which procedures it can run.
+        </text>
+      </svg>
+    </div>
 
     <div class="download-card">
       <div>
@@ -200,108 +314,254 @@
       <a href="agent-context-template.zip" class="download-button" download>Download &darr;</a>
     </div>
 
-    <h2>The shape</h2>
-
-    <div class="tree">
-agent-context-template/
-&nbsp;&nbsp;CLAUDE.md                <span class="comment"># root system instructions (loaded every session)</span>
-&nbsp;&nbsp;AGENTS.md                <span class="comment"># same, for Codex</span>
-&nbsp;&nbsp;Vault-Architecture.md    <span class="comment"># the full manual</span>
-&nbsp;&nbsp;agent/
-&nbsp;&nbsp;&nbsp;&nbsp;Soul.md              <span class="comment"># who the agent is</span>
-&nbsp;&nbsp;&nbsp;&nbsp;Mind.md              <span class="comment"># how it thinks</span>
-&nbsp;&nbsp;&nbsp;&nbsp;Identity.md          <span class="comment"># name, voice, visual identity</span>
-&nbsp;&nbsp;&nbsp;&nbsp;scripts/             <span class="comment"># hooks + helpers (Stop-hook, nightly cycle)</span>
-&nbsp;&nbsp;&nbsp;&nbsp;secrets/             <span class="comment"># tokens (gitignored)</span>
-&nbsp;&nbsp;Memory/
-&nbsp;&nbsp;&nbsp;&nbsp;Hippocampus.md       <span class="comment"># working memory — Now + Arc</span>
-&nbsp;&nbsp;&nbsp;&nbsp;Daily/               <span class="comment"># raw session capture (one file per day)</span>
-&nbsp;&nbsp;&nbsp;&nbsp;Weekly/              <span class="comment"># end-of-week syntheses</span>
-&nbsp;&nbsp;&nbsp;&nbsp;People/              <span class="comment"># one note per person in your life</span>
-&nbsp;&nbsp;&nbsp;&nbsp;Lessons/             <span class="comment"># operational learnings you don&rsquo;t want to repeat</span>
-&nbsp;&nbsp;&nbsp;&nbsp;Preferences/         <span class="comment"># working-style notes</span>
-&nbsp;&nbsp;&nbsp;&nbsp;Meetings/            <span class="comment"># meeting transcripts (Granola sync)</span>
-&nbsp;&nbsp;&nbsp;&nbsp;Connectors/          <span class="comment"># one note per data source + status</span>
-&nbsp;&nbsp;Skills/                  <span class="comment"># reusable procedures = slash commands</span>
-&nbsp;&nbsp;_seed/                   <span class="comment"># drop-zone for personality bundle</span>
-&nbsp;&nbsp;.claude/  .codex/        <span class="comment"># project hooks (Stop, UserPromptSubmit)</span>
-    </div>
-
-    <h2>What each folder gives your agent</h2>
-
-    <div class="folder coral">
-      <h3><code>CLAUDE.md</code> (root)</h3>
-      <p>The first thing your agent reads every session. Tells it the name of the agent, the vault layout, and the operating rules (skills first, daily log every session, nothing gets deleted).</p>
-      <p class="why"><strong>Why it matters:</strong> without this, the agent is a blank-slate stranger every time. With it, your agent walks into the room already knowing where it is.</p>
+    <h2>What&rsquo;s in the zip</h2>
+    <div class="legend">
+      <span class="chip"><span class="dot" style="background: var(--coral);"></span> Identity</span>
+      <span class="chip"><span class="dot" style="background: var(--mint-deep);"></span> Memory</span>
+      <span class="chip"><span class="dot" style="background: var(--yellow);"></span> Skills</span>
+      <span class="chip"><span class="dot" style="background: var(--blue-deep);"></span> Plumbing</span>
     </div>
 
     <div class="folder coral">
-      <h3><code>agent/</code> &mdash; identity</h3>
-      <p>Three short files that define who the agent <em>is</em> &mdash; pulled in via <code>@</code>-imports inside <code>CLAUDE.md</code>.</p>
-      <ul>
-        <li><code>Soul.md</code> &mdash; voice register, loyalty, the bond. The values layer.</li>
-        <li><code>Mind.md</code> &mdash; canonical reasoning moves. How to push back, when to ask vs. assume.</li>
-        <li><code>Identity.md</code> &mdash; name, pronouns, visual identity. The outward-facing shell.</li>
-      </ul>
-      <p class="why"><strong>Why it matters:</strong> personality and behavior stop being something you re-prompt every session. They&rsquo;re durable. The agent disagrees with you the same way on Tuesday as it did on Monday.</p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <polygon points="12 11 13.2 13.6 16 14 14 16 14.4 18.8 12 17.5 9.6 18.8 10 16 8 14 10.8 13.6"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">CLAUDE.md</span> root instructions</h3>
+        <p>The first thing your agent reads every session. Names the agent, declares the vault layout, and sets the operating rules (skills first, daily log every session, nothing gets deleted).</p>
+        <p class="why"><strong>Why it matters:</strong> without this, the agent is a blank-slate stranger every time. With it, your agent walks into the room already knowing where it is.</p>
+      </div>
+    </div>
+
+    <div class="folder coral">
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">agent/</span> identity</h3>
+        <p>Three short files that define who the agent <em>is</em> &mdash; pulled in via <code>@</code>-imports inside <code>CLAUDE.md</code>.</p>
+        <ul>
+          <li><code>Soul.md</code> &mdash; voice register, loyalty, the bond.</li>
+          <li><code>Mind.md</code> &mdash; canonical reasoning moves. How to push back, when to ask vs. assume.</li>
+          <li><code>Identity.md</code> &mdash; name, pronouns, visual identity.</li>
+        </ul>
+        <p class="why"><strong>Why it matters:</strong> personality stops being something you re-prompt every session. It&rsquo;s durable. The agent disagrees with you the same way on Tuesday as it did on Monday.</p>
+      </div>
     </div>
 
     <div class="folder mint">
-      <h3><code>Memory/Hippocampus.md</code> &mdash; working memory</h3>
-      <p>Two sections: <strong>Now</strong> (this week &mdash; what&rsquo;s active, what&rsquo;s on the calendar today, open threads) and <strong>Arc</strong> (longer horizon &mdash; who you are, where you&rsquo;re going). Always loaded.</p>
-      <p class="why"><strong>Why it matters:</strong> this is what makes the agent feel <em>continuous</em>. It opens the file and immediately knows what you&rsquo;re in the middle of.</p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9.5 3a3 3 0 0 0-3 3 3 3 0 0 0-3 3 3 3 0 0 0 1.5 2.6A3 3 0 0 0 3.5 14a3 3 0 0 0 3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V3a3 3 0 0 0-3 0z"/>
+          <path d="M14.5 3a3 3 0 0 1 3 3 3 3 0 0 1 3 3 3 3 0 0 1-1.5 2.6A3 3 0 0 1 20.5 14a3 3 0 0 1-3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3V3a3 3 0 0 1 3 0z"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">Memory/Hippocampus.md</span> working memory</h3>
+        <p>Two sections: <strong>Now</strong> (this week &mdash; what&rsquo;s active, what&rsquo;s on the calendar today, open threads) and <strong>Arc</strong> (longer horizon &mdash; who you are, where you&rsquo;re going). Always loaded.</p>
+        <p class="why"><strong>Why it matters:</strong> this is what makes the agent feel <em>continuous</em>. It opens the file and immediately knows what you&rsquo;re in the middle of.</p>
+      </div>
     </div>
 
     <div class="folder mint">
-      <h3><code>Memory/Daily/</code> &mdash; raw capture</h3>
-      <p>One file per day, multiple sessions separated by <code>---</code>. Written automatically by the <strong>Stop hook</strong> (in <code>agent/scripts/</code>) at the end of every session. Raw, ugly, unfiltered.</p>
-      <p class="why"><strong>Why it matters:</strong> the input surface. You don&rsquo;t have to remember to journal &mdash; the agent journals for you, and the nightly cycle distills the signal out.</p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="16" rx="2"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="8" y1="3" x2="8" y2="7"/>
+          <line x1="16" y1="3" x2="16" y2="7"/>
+          <circle cx="12" cy="15" r="1.3" fill="currentColor"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">Memory/Daily/</span> raw capture</h3>
+        <p>One file per day, multiple sessions separated by <code>---</code>. Written automatically by the <strong>Stop hook</strong> at the end of every session. Raw, ugly, unfiltered.</p>
+        <p class="why"><strong>Why it matters:</strong> the input surface. You don&rsquo;t have to remember to journal &mdash; the agent journals for you, and the nightly cycle distills the signal out.</p>
+      </div>
     </div>
 
     <div class="folder mint">
-      <h3><code>Memory/People/</code></h3>
-      <p>One markdown file per person who matters &mdash; family, colleagues, classmates, friends. Last interaction, ongoing threads, what they care about, links to relevant emails/messages.</p>
-      <p class="why"><strong>Why it matters:</strong> the agent stops asking &ldquo;who&rsquo;s that?&rsquo;&rsquo; You can say &ldquo;draft a check-in to Mara&rdquo; and it has the context to make it sound like you.</p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">Memory/People/</span> the people graph</h3>
+        <p>One markdown file per person who matters &mdash; family, colleagues, classmates, friends. Last interaction, ongoing threads, what they care about, links to relevant emails and messages.</p>
+        <p class="why"><strong>Why it matters:</strong> the agent stops asking &ldquo;who&rsquo;s that?&rdquo; You can say &ldquo;draft a check-in to Mara&rdquo; and it has the context to make it sound like you.</p>
+      </div>
     </div>
 
     <div class="folder mint">
-      <h3><code>Memory/Lessons/</code> &amp; <code>Memory/Preferences/</code></h3>
-      <p>Operational learnings (&ldquo;don&rsquo;t use mocks for integration tests &mdash; we got burned&rdquo;) and working-style notes (&ldquo;mornings = deep work, no meetings before 10&rdquo;). Written by the extraction subagent when patterns recur.</p>
-      <p class="why"><strong>Why it matters:</strong> mistakes compound into wisdom instead of evaporating. You don&rsquo;t correct the agent on the same thing twice.</p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18h6"/>
+          <path d="M10 21h4"/>
+          <path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1.5 1.7 1.5 2.5v1h5v-1c0-.8.7-1.7 1.5-2.5A6 6 0 0 0 12 3z"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">Memory/Lessons/</span> &amp; <span class="path">Preferences/</span></h3>
+        <p>Operational learnings (&ldquo;don&rsquo;t use mocks for integration tests &mdash; we got burned&rdquo;) and working-style notes (&ldquo;mornings = deep work, no meetings before 10&rdquo;). Written by the extraction subagent when patterns recur.</p>
+        <p class="why"><strong>Why it matters:</strong> mistakes compound into wisdom instead of evaporating. You don&rsquo;t correct the agent on the same thing twice.</p>
+      </div>
     </div>
 
     <div class="folder mint">
-      <h3><code>Memory/Weekly/</code>, <code>Meetings/</code>, <code>Connectors/</code></h3>
-      <p>Weekly syntheses (Friday wrap-ups), meeting transcripts (Granola), and one note per data source you&rsquo;ve wired up (Gmail, Calendar, Notion, Canvas) with its current status &mdash; so the agent knows what it can and can&rsquo;t reach.</p>
-      <p class="why"><strong>Why it matters:</strong> the agent knows where its eyes are. &ldquo;Check my calendar&rdquo; works because there&rsquo;s a Connectors/ note that says <em>yes, Gmail Calendar is wired, here&rsquo;s the account.</em></p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+          <polyline points="2 17 12 22 22 17"/>
+          <polyline points="2 12 12 17 22 12"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">Weekly/</span> <span class="path">Meetings/</span> <span class="path">Connectors/</span></h3>
+        <p>Weekly syntheses (Friday wrap-ups), meeting transcripts (Granola), and one note per data source you&rsquo;ve wired up (Gmail, Calendar, Notion, Canvas) with its current status &mdash; so the agent knows what it can and can&rsquo;t reach.</p>
+        <p class="why"><strong>Why it matters:</strong> the agent knows where its eyes are. &ldquo;Check my calendar&rdquo; works because Connectors/ confirms Calendar is wired and points at the right account.</p>
+      </div>
     </div>
 
     <div class="folder yellow">
-      <h3><code>Skills/</code> &mdash; reusable procedures</h3>
-      <p>Each subfolder is one named procedure (<code>plan-my-day/</code>, <code>send-email/</code>, <code>session-handoff/</code>) with a <code>SKILL.md</code> describing pre-checks, work, evals, and definition-of-done. They register as slash commands &mdash; type <code>/plan-my-day</code> and the agent runs the procedure exactly the same way every time.</p>
-      <p class="why"><strong>Why it matters:</strong> the difference between a chatbot and an agent. When something is worth doing twice, it becomes a skill. Reliability over cleverness.</p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="currentColor" fill-opacity="0.15"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">Skills/</span> reusable procedures</h3>
+        <p>Each subfolder is one named procedure (<code>plan-my-day/</code>, <code>send-email/</code>, <code>session-handoff/</code>) with a <code>SKILL.md</code> describing pre-checks, the work, evals, and definition-of-done. They register as slash commands &mdash; type <code>/plan-my-day</code> and the agent runs the same way every time.</p>
+        <p class="why"><strong>Why it matters:</strong> the difference between a chatbot and an agent. When something is worth doing twice, it becomes a skill. Reliability over cleverness.</p>
+      </div>
     </div>
 
     <div class="folder blue">
-      <h3><code>.claude/</code> &amp; <code>.codex/</code> &mdash; hooks</h3>
-      <p>The <strong>Stop hook</strong> appends every session to <code>Memory/Daily/</code>. The <strong>UserPromptSubmit hook</strong> (optional, wired later) does vector recall on your prompt and pulls relevant chunks of the vault back into context.</p>
-      <p class="why"><strong>Why it matters:</strong> the loop closes itself. You don&rsquo;t have to remember to save; the system remembers for you.</p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="17 1 21 5 17 9"/>
+          <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+          <polyline points="7 23 3 19 7 15"/>
+          <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">.claude/</span> &amp; <span class="path">.codex/</span> hooks</h3>
+        <p>The <strong>Stop hook</strong> appends every session to <code>Memory/Daily/</code>. The <strong>UserPromptSubmit hook</strong> (optional, wired later) does vector recall on your prompt and pulls relevant chunks of the vault back into context.</p>
+        <p class="why"><strong>Why it matters:</strong> the loop closes itself. You don&rsquo;t have to remember to save; the system remembers for you.</p>
+      </div>
     </div>
 
     <div class="folder blue">
-      <h3><code>_seed/</code> &mdash; personalization input</h3>
-      <p>Drop a folder here with your answers (<code>answers.yaml</code>, an essay, voice samples) and the <code>/hatch</code> skill reads it once to personalize the templates &mdash; substituting <code>{{agent_name}}</code>, <code>{{user_name}}</code>, voice register, domain folders. Then it gets archived.</p>
-      <p class="why"><strong>Why it matters:</strong> the boring &ldquo;set up my agent&rsquo;s personality&rdquo; step happens once, deterministically, from a structured input &mdash; not through 40 messages of back-and-forth.</p>
+      <div class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22V12"/>
+          <path d="M12 12C7 12 4 9 4 5c4 0 8 3 8 7z"/>
+          <path d="M12 12c5 0 8-3 8-7-4 0-8 3-8 7z"/>
+          <path d="M5 21h14"/>
+        </svg>
+      </div>
+      <div>
+        <h3><span class="path">_seed/</span> personalization input</h3>
+        <p>Drop a folder here with your answers (<code>answers.yaml</code>, an essay, voice samples) and the <code>/hatch</code> skill reads it once to personalize the templates &mdash; substituting your agent&rsquo;s name, your name, voice register, domain folders. Then it gets archived.</p>
+        <p class="why"><strong>Why it matters:</strong> the boring &ldquo;set up my agent&rsquo;s personality&rdquo; step happens once, deterministically, from a structured input &mdash; not through 40 messages of back-and-forth.</p>
+      </div>
     </div>
+
+    <h2>Where your knowledge goes</h2>
+    <p style="color: var(--grey); font-size: 15px;">The Stop hook drops raw capture into <code>Memory/Daily/</code>. Every night, an extraction subagent reads those notes and routes the signal to the right topic file. You don&rsquo;t organize; the system organizes.</p>
+    <div class="diagram" aria-label="Diagram: extraction routes from Daily into topic notes">
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img">
+        <defs>
+          <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+          </marker>
+        </defs>
+        <g>
+          <rect x="10" y="100" width="120" height="60" rx="12" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+          <text x="70" y="125" text-anchor="middle" font-family="Inter" font-size="13" font-weight="700" fill="#1a1a1a">Session ends</text>
+          <text x="70" y="143" text-anchor="middle" font-family="Inter" font-size="10" fill="#6b6b6b">Stop hook fires</text>
+        </g>
+        <line x1="132" y1="130" x2="180" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow2)"/>
+        <g>
+          <rect x="185" y="100" width="130" height="60" rx="12" fill="#A8E6CE"/>
+          <text x="250" y="123" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" font-weight="700" fill="#1a1a1a">Memory/Daily/</text>
+          <text x="250" y="141" text-anchor="middle" font-family="Inter" font-size="10" fill="#1a1a1a">raw capture</text>
+        </g>
+        <line x1="317" y1="130" x2="365" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow2)"/>
+        <g>
+          <rect x="370" y="100" width="150" height="60" rx="12" fill="#E8C840"/>
+          <text x="445" y="123" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="12" font-weight="700" fill="#1a1a1a">/rem-cycle</text>
+          <text x="445" y="141" text-anchor="middle" font-family="Inter" font-size="10" fill="#1a1a1a">extraction (nightly)</text>
+        </g>
+        <path d="M520 115 Q580 115 605 35" stroke="#1a1a1a" stroke-width="1.4" fill="none" marker-end="url(#arrow2)"/>
+        <path d="M520 125 Q580 125 605 100" stroke="#1a1a1a" stroke-width="1.4" fill="none" marker-end="url(#arrow2)"/>
+        <path d="M520 140 Q580 140 605 165" stroke="#1a1a1a" stroke-width="1.4" fill="none" marker-end="url(#arrow2)"/>
+        <path d="M520 150 Q580 150 605 230" stroke="#1a1a1a" stroke-width="1.4" fill="none" marker-end="url(#arrow2)"/>
+        <g>
+          <rect x="610" y="10" width="100" height="40" rx="10" fill="#A8E6CE" fill-opacity="0.55"/>
+          <text x="660" y="35" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11" font-weight="700" fill="#1a1a1a">People/</text>
+        </g>
+        <g>
+          <rect x="610" y="75" width="100" height="40" rx="10" fill="#A8E6CE" fill-opacity="0.55"/>
+          <text x="660" y="100" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11" font-weight="700" fill="#1a1a1a">Lessons/</text>
+        </g>
+        <g>
+          <rect x="610" y="140" width="100" height="40" rx="10" fill="#A8E6CE" fill-opacity="0.55"/>
+          <text x="660" y="165" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11" font-weight="700" fill="#1a1a1a">Preferences/</text>
+        </g>
+        <g>
+          <rect x="610" y="205" width="100" height="40" rx="10" fill="#A8E6CE" fill-opacity="0.55"/>
+          <text x="660" y="230" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="11" font-weight="700" fill="#1a1a1a">Hippocampus</text>
+        </g>
+      </svg>
+    </div>
+    <p class="diagram-caption">Raw &rarr; routed &rarr; recallable. You stop curating; the agent curates for itself.</p>
 
     <h2>The hygiene loop</h2>
-    <p>Three loops keep the system from rotting:</p>
-    <ol style="margin-left: 22px; margin-bottom: 16px;">
-      <li><strong>Every session</strong> &mdash; Stop hook writes raw capture to <code>Memory/Daily/</code>.</li>
-      <li><strong>Every night</strong> &mdash; <code>/rem-cycle</code> extracts signal from daily notes into <code>People/</code>, <code>Lessons/</code>, <code>Preferences/</code>, and refreshes <code>Hippocampus.md</code>&rsquo;s <strong>Now</strong>.</li>
-      <li><strong>Every ~48&nbsp;hours</strong> &mdash; the <strong>Arc</strong> section of Hippocampus gets refreshed from longer-horizon signal.</li>
-    </ol>
-    <p>You don&rsquo;t maintain it. The system maintains itself, and you correct it when it&rsquo;s wrong.</p>
+    <p style="color: var(--grey); font-size: 15px;">Three loops keep the system from rotting. You don&rsquo;t maintain it &mdash; you correct it when it&rsquo;s wrong.</p>
+    <div class="diagram" aria-label="Diagram: three nested loops">
+      <svg viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg" role="img">
+        <circle cx="300" cy="170" r="148" fill="none" stroke="#7ec2db" stroke-width="2" stroke-dasharray="6 6"/>
+        <circle cx="300" cy="170" r="100" fill="none" stroke="#6ed0ad" stroke-width="2.5"/>
+        <circle cx="300" cy="170" r="56" fill="#F08080" fill-opacity="0.12" stroke="#F08080" stroke-width="3"/>
+
+        <text x="300" y="167" text-anchor="middle" font-family="Inter" font-size="13" font-weight="700" fill="#1a1a1a">Every session</text>
+        <text x="300" y="183" text-anchor="middle" font-family="Inter" font-size="10" fill="#6b6b6b">Stop hook &rarr; Daily/</text>
+
+        <text x="300" y="78" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#1a1a1a">Every night</text>
+        <text x="300" y="93" text-anchor="middle" font-family="Inter" font-size="10" fill="#6b6b6b">/rem-cycle extracts</text>
+
+        <text x="300" y="28" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#1a1a1a">Every ~48 hours</text>
+        <text x="300" y="43" text-anchor="middle" font-family="Inter" font-size="10" fill="#6b6b6b">Arc refresh</text>
+
+        <g>
+          <line x1="356" y1="170" x2="395" y2="170" stroke="#F08080" stroke-width="1.5"/>
+          <text x="402" y="167" font-family="Inter" font-size="11" font-weight="600" fill="#1a1a1a">Raw capture</text>
+          <text x="402" y="181" font-family="Inter" font-size="10" fill="#6b6b6b">unfiltered, dated</text>
+        </g>
+        <g>
+          <line x1="244" y1="170" x2="200" y2="170" stroke="#6ed0ad" stroke-width="1.5"/>
+          <text x="195" y="167" text-anchor="end" font-family="Inter" font-size="11" font-weight="600" fill="#1a1a1a">Distilled</text>
+          <text x="195" y="181" text-anchor="end" font-family="Inter" font-size="10" fill="#6b6b6b">People · Lessons · Now</text>
+        </g>
+        <g>
+          <line x1="300" y1="318" x2="300" y2="278" stroke="#7ec2db" stroke-width="1.5"/>
+          <text x="300" y="332" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="#1a1a1a">Arc &mdash; long-horizon threads</text>
+        </g>
+      </svg>
+    </div>
+    <p class="diagram-caption">Three concentric loops: each session captures, each night distills, every other day the long view refreshes.</p>
 
     <div class="callout">
       <strong>Try it now:</strong> download the zip above, unzip it anywhere you like, <code>cd</code> in, and open Claude Code with <code>claude .</code>. The <code>CLAUDE.md</code> at the root will load automatically &mdash; ask your agent &ldquo;what&rsquo;s in this vault?&rdquo; and watch it walk itself through the structure. Then move on to <a href="build-an-agent.html">Step 4 &mdash; Build your agent</a>.

@@ -67,14 +67,49 @@
       color: var(--grey);
       margin-bottom: 40px;
     }
-    .placeholder {
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .next-list {
+      list-style: none;
+      counter-reset: nextitem;
+    }
+    .next-list > li {
+      counter-increment: nextitem;
       background: var(--light-grey);
       border-radius: 16px;
-      padding: 32px;
+      padding: 28px 28px 28px 84px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .next-list > li::before {
+      content: counter(nextitem);
+      position: absolute;
+      left: 28px;
+      top: 28px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--mint);
+      color: var(--black);
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .next-list p {
       color: var(--grey);
       font-size: 15px;
-      font-style: italic;
-      text-align: center;
+      margin-top: 6px;
+    }
+    .next-list strong {
+      border-bottom: 2px solid var(--yellow);
+      font-weight: 700;
     }
     @media (max-width: 600px) {
       .container { padding: 40px 28px; }
@@ -86,9 +121,22 @@
     <a href="index.html" class="back-link">&larr; Agenda</a>
     <span class="step-label">Step 5 of 5 &middot; 5 min</span>
     <h1>Where to go from here</h1>
-    <p class="lead">Three paths to keep building after today.</p>
+    <p class="lead">You built one skill today. Here's how to keep going.</p>
 
-    <div class="placeholder">Outline coming.</div>
+    <ol class="next-list">
+      <li>
+        <h2>Build more skills in Claude Code</h2>
+        <p>Today you wrote one. The leverage compounds — every recurring chunk of your week is a candidate. Open Claude Code, notice the next thing you'd rather not do twice, and turn it into a skill. The second one takes half as long as the first.</p>
+      </li>
+      <li>
+        <h2>Do the advanced agent onboarding</h2>
+        <p>A skill is a tool. An <strong>agent</strong> is something that knows you &mdash; your calendar, your inbox, your people, your priorities &mdash; and acts across them. The advanced onboarding sets up that brain: memory, connectors, a hippocampus that wakes up knowing what you're working on.</p>
+      </li>
+      <li>
+        <h2>Talk to your agent</h2>
+        <p>Once it's set up, use it like a partner, not a chatbot. Think out loud. Ask it to push back. Tell it what happened today. The more you talk to it, the more it learns how you actually work &mdash; and the more useful it gets.</p>
+      </li>
+    </ol>
   </div>
 </body>
 </html>
